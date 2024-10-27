@@ -1,0 +1,50 @@
+//Mark the path of the ant to the homebase
+
+#MarkPathToHome{
+    mark 6
+    direction southeast else *2
+    jump @markNorthWest
+    direction east else *2
+    jump @markWest
+    direction northeast else *2
+    jump @markSouthWest
+    direction northwest else *2
+    jump @markSouthEast
+    direction west else *2
+    jump @markEast
+    direction southwest else *2
+    jump @markNorthEast
+
+    @markSouthEast
+    mark 3
+    unmark 4
+    unmark 5
+    return
+    @markEast
+    unmark 3
+    mark 4
+    mark 5
+    return
+    @markNorthEast
+    unmark 3
+    mark 4
+    unmark 5
+    return
+    @markNorthWest
+    unmark 3
+    unmark 4
+    mark 5
+    return
+    @markWest
+    mark 3
+    mark 4
+    mark 5
+    return
+    @markSouthWest
+    mark 3
+    unmark 4
+    mark 5
+    return
+
+
+}

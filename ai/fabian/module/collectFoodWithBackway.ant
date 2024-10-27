@@ -1,0 +1,35 @@
+#collectFoodWithBackway {
+@begin
+    sense here friendfood else @searchFood
+    jump @goHome
+@goHome
+    call #followPath012
+    sense here home else @begin
+    drop else @begin
+    jump @begin
+@searchFood
+    sense here food else @nextLeft
+    pickup else @begin
+    jump @begin
+@nextLeft
+    sense left food else @nextAhead
+    turn left
+    jump @doAMove
+@nextAhead
+    sense ahead food else @nextRight
+    jump @doAMove
+@nextRight
+    sense right food else @goRandom
+    turn right
+    jump @doAMove
+@doAMove
+    call #safe_dirWithFoehome
+    move else @goRandom
+    call #setPath
+    jump @begin
+@goRandom
+    call #goRandomWithFoeHome
+    call #setPath
+    jump @begin
+
+}

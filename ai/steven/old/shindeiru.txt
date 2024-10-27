@@ -1,0 +1,390 @@
+brain "おまえはもうしんでいる" {
+	set 1                               
+	test 1 else 4                //target: @findFood //label: @begin
+	test 2 else 177               //target: @bringHome
+	jump 179         //target: @followMarkerHomeNoFood
+	flip 3 else 6  //target: @begin//BOM: #setDirRandom //label: @begin //BOM: #findFoodNoMarker //label: @findFood
+	jump 10
+	flip 2 else 9
+	turn left
+	jump 10
+	turn right
+	jump 11   //target: @return//target: @return//target: @return // EOM: #setDirRandom
+	sense ahead antlion else 13 //label: @checkForAntLion //BOM: #safe_dir
+	turn left
+	jump 11 //target: @checkForAntLion
+	sense ahead foehome else 16 //label: @checkForFoehome
+	turn left
+	jump11 //target: @checkForAntLion
+	sense left foe else 18 //label: @checkForEnemy
+	sense right foe else 21
+	turn left
+	jump 11 //target: @checkForAntLion // EOM: #safe_dir
+	unset 1 //BOM: #setDirUnexplored
+	unset 4
+	unset 5
+	sense ahead marker 0 else 31   //target: @begin//target: @begin//target: @changeDir //label: @begin
+	sense ahead marker 1 else 31 //target: @changeDir
+	sense ahead marker 2 else 31 //target: @changeDir
+	sense ahead marker 3 else 31 //target: @changeDir
+	sense ahead marker 4 else 31 //target: @changeDir
+	sense ahead marker 5 else 31 //target: @changeDir
+	jump 36   //target: @return//target: @return//target: @return
+	turn left //label: @changeDir
+	flip 50 else 24   //target: @begin//target: @begin//target: @begin
+	jump 35 //target: @cycleBreak
+	jump 24   //target: @begin//target: @begin//target: @begin
+	unset 1 //label: @cycleBreak // EOM: #setDirUnexplored
+	test 1 else 105 //target: @cycleDone
+	direction northwest else 42 //target: @northeast //label: @northwest //BOM: #markMovingTo
+	unmark 0
+	mark 1
+	mark 2
+	jump 66   //target: @return//target: @return//target: @return
+	direction northeast else 47 //target: @east //label: @northeast
+	unmark 0
+	mark 1
+	unmark 2
+	jump 66   //target: @return//target: @return//target: @return
+	direction east else 52 //target: @southeast //label: @east
+	unmark 0
+	mark 1
+	mark 2
+	jump 66   //target: @return//target: @return//target: @return
+	direction southeast else 57 //target: @southwest //label: @southeast
+	mark 0
+	unmark 1
+	unmark 2
+	jump 66   //target: @return//target: @return//target: @return
+	direction southwest else 62 //target: @west //label: @southwest
+	mark 0
+	unmark 1
+	mark 2
+	jump 66   //target: @return//target: @return//target: @return
+	mark 0 //label: @west
+	mark 1
+	unmark 2
+	jump 66   //target: @return//target: @return//target: @return // EOM: #markMovingTo
+	move else 4  //target: @begin//target: @begin
+	direction southeast else 72 //target: @northeast //label: @northwest //BOM: #markMovedFrom
+	unmark 3
+	unmark 4
+	mark 5
+	jump 96   //target: @return//target: @return//target: @return
+	direction southwest else 77 //target: @east //label: @northeast
+	unmark 3
+	mark 4
+	unmark 5
+	jump 96   //target: @return//target: @return//target: @return
+	direction west else 82 //target: @southeast //label: @east
+	unmark 3
+	mark 4
+	mark 5
+	jump 96   //target: @return//target: @return//target: @return
+	direction northwest else 87 //target: @southwest //label: @southeast
+	mark 3
+	unmark 4
+	unmark 5
+	jump 96   //target: @return//target: @return//target: @return
+	direction northeast else 92 //target: @west //label: @southwest
+	mark 3
+	unmark 4
+	mark 5
+	jump 96   //target: @return//target: @return//target: @return
+	mark 3 //label: @west
+	mark 4
+	unmark 5
+	jump 96   //target: @return//target: @return//target: @return // EOM: #markMovedFrom
+	pickup else 98   //target: @return//target: @return//target: @return //BOM: #checkFoodAndPickup
+	jump 98   //target: @return//target: @return//target: @return // EOM: #checkFoodAndPickup
+	sense here friendfood else 4  //target: @begin//target: @begin
+	sense here food else 102 //target: @setLastFoodState
+	unset 1
+	jump 177  //target: @return//target: @return
+	set 2 //label: @setLastFoodState
+	unset 1
+	jump 177  //target: @return//target: @return
+	sense here marker 0 else 110   //target: @begin//target: @begin//target: @state1 //label: @setDirectionWithMarkerFollowToFood //BOM: #interpretMarkerFood //label: @begin //BOM: #followMarkerToFood //label: @cycleDone
+	sense here marker 1 else 114 //target: @state2
+	sense here marker 2 else 109
+	jump 157 //target: @setDirNoFoodLeft
+	jump 145 //target: @setDirWest
+	sense here marker 1 else 117 //target: @state3 //label: @state1
+	sense here marker 2 else 113
+	jump 130 //target: @setDirEast
+	jump 125 //target: @setDirNortheast
+	sense here marker 2 else 116 //label: @state2
+	jump 140 //target: @setDirSouthwest
+	jump 135 //target: @setDirSoutheast
+	sense here marker 2 else 119 //label: @state3
+	jump 120 //target: @setDirNorthwest
+	jump 150 //target: @setDirRandom
+	direction northwest else 122 //label: @setDirNorthwest
+	jump 160     //target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	direction northwest else 122
+	jump 159 //target: @done
+	direction northeast else 127 //label: @setDirNortheast
+	jump 159 //target: @done
+	turn left
+	direction northeast else 127
+	jump 159 //target: @done
+	direction east else 132 //label: @setDirEast
+	jump 159 //target: @done
+	turn left
+	direction east else 132
+	jump 159 //target: @done
+	direction southeast else 137 //label: @setDirSoutheast
+	jump 159 //target: @done
+	turn left
+	direction southeast else 137
+	jump 159 //target: @done
+	direction southwest else 142 //label: @setDirSouthwest
+	jump 159 //target: @done
+	turn left
+	direction southwest else 142
+	jump 159 //target: @done
+	direction west else 147 //label: @setDirWest
+	jump 159 //target: @done
+	turn left
+	direction west else 147
+	jump 159 //target: @done
+	flip 3 else 152 //label: @setDirRandom
+	jump 159 //target: @done
+	flip 2 else 155
+	turn left
+	jump 159 //target: @done
+	turn right
+	jump 159 //target: @done
+	set 1 //label: @setDirNoFoodLeft
+	jump 150 //target: @setDirRandom
+	jump 160     //target: @return//target: @return//target: @return//target: @return//target: @return //label: @done // EOM: #interpretMarkerFood
+	test 1 else 162 //target: @moreFood
+	jump 177    //target: @return//target: @return//target: @return//target: @return
+	sense ahead antlion else 165 //label: @checkForAntLion //BOM: #safe_dirWithFoehome //label: @moreFood
+	turn left
+	jump 162 //target: @checkForAntLion
+	sense ahead foehome else 168 //label: @checkForFoehome
+	turn left
+	jump162 //target: @checkForAntLion
+	sense left foe else 172 //label: @checkForEnemy
+	sense right foe else 172
+	turn left
+	jump 162 //target: @checkForAntLion
+	jump 173     //target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirWithFoehome
+	move else 105   //target: @begin//target: @begin//target: @begin
+	pickup else 175 //target: @pickupTest
+	sense here friendfood else 105   //target: @begin//target: @begin//target: @begin //label: @pickupTest
+	jump 177    //target: @return//target: @return//target: @return//target: @return // EOM: #followMarkerToFood // EOM: #findFoodNoMarker
+	sense here friendfood else 1    //target: @begin //label: @bringHome
+	test 2 else 247        //target: @followMarkerHome
+	test 2 else 183  //target: @begin//target: @notLastFood //label: @begin //BOM: #followMarkerToHome //label: @followMarkerHomeNoFood
+	mark 0
+	mark 1
+	mark 2
+	sense here marker 3 else 188 //target: @state1 //label: @setDirectionWithMarkerFollowToFood //BOM: #interpretMarkerHome //label: @notLastFood
+	sense here marker 4 else 192 //target: @state2
+	sense here marker 5 else 187
+	jump 235 //target: @setDirNoFoodLeft
+	jump 223 //target: @setDirWest
+	sense here marker 4 else 195 //target: @state3 //label: @state1
+	sense here marker 5 else 191
+	jump 208 //target: @setDirEast
+	jump 203 //target: @setDirNortheast
+	sense here marker 5 else 194 //label: @state2
+	jump 218 //target: @setDirSouthwest
+	jump 213 //target: @setDirSoutheast
+	sense here marker 5 else 197 //label: @state3
+	jump 198 //target: @setDirNorthwest
+	jump 228 //target: @setDirRandom
+	direction northwest else 200 //label: @setDirNorthwest
+	jump 238   //target: @return//target: @return//target: @return
+	turn left
+	direction northwest else 200
+	jump 237 //target: @done
+	direction northeast else 205 //label: @setDirNortheast
+	jump 237 //target: @done
+	turn left
+	direction northeast else 205
+	jump 237 //target: @done
+	direction east else 210 //label: @setDirEast
+	jump 237 //target: @done
+	turn left
+	direction east else 210
+	jump 237 //target: @done
+	direction southeast else 215 //label: @setDirSoutheast
+	jump 237 //target: @done
+	turn left
+	direction southeast else 215
+	jump 237 //target: @done
+	direction southwest else 220 //label: @setDirSouthwest
+	jump 237 //target: @done
+	turn left
+	direction southwest else 220
+	jump 237 //target: @done
+	direction west else 225 //label: @setDirWest
+	jump 237 //target: @done
+	turn left
+	direction west else 225
+	jump 237 //target: @done
+	flip 3 else 230 //label: @setDirRandom
+	jump 237 //target: @done
+	flip 2 else 233
+	turn left
+	jump 237 //target: @done
+	turn right
+	jump 237 //target: @done
+	set 1 //label: @setDirNoFoodLeft
+	jump 228 //target: @setDirRandom
+	jump  //label: @done // EOM: #interpretMarkerHome
+	move else 179  //target: @begin//target: @begin //label: @afterInterpret
+	sense here home else 243 //BOM: #checkFoodDropOnHome
+	drop else 243
+	unset 0
+	jump 243   //target: @return//target: @return//target: @return // EOM: #checkFoodDropOnHome
+	sense here friendfood else return
+	jump 179  //target: @begin//target: @begin // EOM: #followMarkerToHome
+	sense here friendfood else 4                //target: @findFood
+	jump 177                      //target: @bringHome
+	test 2 else 251  //target: @begin//target: @notLastFood //label: @begin //BOM: #followMarkerToHome //label: @followMarkerHome
+	mark 0
+	mark 1
+	mark 2
+	sense here marker 3 else 256 //target: @state1 //label: @setDirectionWithMarkerFollowToFood //BOM: #interpretMarkerHome //label: @notLastFood
+	sense here marker 4 else 260 //target: @state2
+	sense here marker 5 else 255
+	jump 303 //target: @setDirNoFoodLeft
+	jump 291 //target: @setDirWest
+	sense here marker 4 else 263 //target: @state3 //label: @state1
+	sense here marker 5 else 259
+	jump 276 //target: @setDirEast
+	jump 271 //target: @setDirNortheast
+	sense here marker 5 else 262 //label: @state2
+	jump 286 //target: @setDirSouthwest
+	jump 281 //target: @setDirSoutheast
+	sense here marker 5 else 265 //label: @state3
+	jump 266 //target: @setDirNorthwest
+	jump 296 //target: @setDirRandom
+	direction northwest else 268 //label: @setDirNorthwest
+	jump 306   //target: @return//target: @return//target: @return
+	turn left
+	direction northwest else 268
+	jump 305 //target: @done
+	direction northeast else 273 //label: @setDirNortheast
+	jump 305 //target: @done
+	turn left
+	direction northeast else 273
+	jump 305 //target: @done
+	direction east else 278 //label: @setDirEast
+	jump 305 //target: @done
+	turn left
+	direction east else 278
+	jump 305 //target: @done
+	direction southeast else 283 //label: @setDirSoutheast
+	jump 305 //target: @done
+	turn left
+	direction southeast else 283
+	jump 305 //target: @done
+	direction southwest else 288 //label: @setDirSouthwest
+	jump 305 //target: @done
+	turn left
+	direction southwest else 288
+	jump 305 //target: @done
+	direction west else 293 //label: @setDirWest
+	jump 305 //target: @done
+	turn left
+	direction west else 293
+	jump 305 //target: @done
+	flip 3 else 298 //label: @setDirRandom
+	jump 305 //target: @done
+	flip 2 else 301
+	turn left
+	jump 305 //target: @done
+	turn right
+	jump 305 //target: @done
+	set 1 //label: @setDirNoFoodLeft
+	jump 296 //target: @setDirRandom
+	jump  //label: @done // EOM: #interpretMarkerHome
+	move else 247  //target: @begin//target: @begin //label: @afterInterpret
+	sense here home else 311 //BOM: #checkFoodDropOnHome
+	drop else 311
+	unset 0
+	jump 311   //target: @return//target: @return//target: @return // EOM: #checkFoodDropOnHome
+	sense here friendfood else return
+	jump 247  //target: @begin//target: @begin // EOM: #followMarkerToHome
+	sense here friendfood else 315             //target: @collectFood
+	jump 177                      //target: @bringHome
+	sense here marker 0 else 320  //target: @begin//target: @state1 //label: @setDirectionWithMarkerFollowToFood //BOM: #interpretMarkerFood //label: @begin //BOM: #followMarkerToFood //label: @collectFood
+	sense here marker 1 else 324 //target: @state2
+	sense here marker 2 else 319
+	jump 367 //target: @setDirNoFoodLeft
+	jump 355 //target: @setDirWest
+	sense here marker 1 else 327 //target: @state3 //label: @state1
+	sense here marker 2 else 323
+	jump 340 //target: @setDirEast
+	jump 335 //target: @setDirNortheast
+	sense here marker 2 else 326 //label: @state2
+	jump 350 //target: @setDirSouthwest
+	jump 345 //target: @setDirSoutheast
+	sense here marker 2 else 329 //label: @state3
+	jump 330 //target: @setDirNorthwest
+	jump 360 //target: @setDirRandom
+	direction northwest else 332 //label: @setDirNorthwest
+	jump 370    //target: @return//target: @return//target: @return//target: @return
+	turn left
+	direction northwest else 332
+	jump 369 //target: @done
+	direction northeast else 337 //label: @setDirNortheast
+	jump 369 //target: @done
+	turn left
+	direction northeast else 337
+	jump 369 //target: @done
+	direction east else 342 //label: @setDirEast
+	jump 369 //target: @done
+	turn left
+	direction east else 342
+	jump 369 //target: @done
+	direction southeast else 347 //label: @setDirSoutheast
+	jump 369 //target: @done
+	turn left
+	direction southeast else 347
+	jump 369 //target: @done
+	direction southwest else 352 //label: @setDirSouthwest
+	jump 369 //target: @done
+	turn left
+	direction southwest else 352
+	jump 369 //target: @done
+	direction west else 357 //label: @setDirWest
+	jump 369 //target: @done
+	turn left
+	direction west else 357
+	jump 369 //target: @done
+	flip 3 else 362 //label: @setDirRandom
+	jump 369 //target: @done
+	flip 2 else 365
+	turn left
+	jump 369 //target: @done
+	turn right
+	jump 369 //target: @done
+	set 1 //label: @setDirNoFoodLeft
+	jump 360 //target: @setDirRandom
+	jump 370    //target: @return//target: @return//target: @return//target: @return //label: @done // EOM: #interpretMarkerFood
+	test 1 else 372 //target: @moreFood
+	jump 387   //target: @return//target: @return//target: @return
+	sense ahead antlion else 375 //label: @checkForAntLion //BOM: #safe_dirWithFoehome //label: @moreFood
+	turn left
+	jump 372 //target: @checkForAntLion
+	sense ahead foehome else 378 //label: @checkForFoehome
+	turn left
+	jump372 //target: @checkForAntLion
+	sense left foe else 382 //label: @checkForEnemy
+	sense right foe else 382
+	turn left
+	jump 372 //target: @checkForAntLion
+	jump 383    //target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirWithFoehome
+	move else 315  //target: @begin//target: @begin
+	pickup else 385 //target: @pickupTest
+	sense here friendfood else 315  //target: @begin//target: @begin //label: @pickupTest
+	jump 387   //target: @return//target: @return//target: @return // EOM: #followMarkerToFood
+	jump 1                          //target: @begin
+}

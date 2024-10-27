@@ -1,0 +1,83 @@
+//Where the code starts
+
+
+#main{
+
+    //flip 10 else *2
+    //jump @GoAfterTheBase
+
+
+	@NotOnBaseField
+    call #senseObstacle
+    sense here marker 0 else *2
+    jump *6
+    sense here marker 1 else *2
+    jump *4
+    sense here marker 2 else *2
+    jump *2
+    call #MarkPathToFood
+    move else *2
+    jump *2
+    turn left
+    call #MarkPathToHome
+    pickup else @DidnotPickup
+    jump @PickedUp
+
+
+
+
+    @PickedUp
+    sense here food else *4
+    flip 10 else *3
+    call #breed
+    jump @NotOnBaseField
+    sense here friendfood else @NotOnBaseField
+    call #FollowHome
+    move else *1
+    sense here home else *-3
+    drop else *1
+    jump @followToFood
+    jump @NotOnBaseField
+
+
+    @followToFood
+    turn left
+    turn left
+    turn left
+    move else *1
+    call #FollowFood
+    move else *2
+    sense here food else *2
+    jump @PickedUp
+    jump *-4
+
+
+    @DidnotPickup
+	 flip 10 else *2
+	turn left
+	flip 10 else *2
+	turn right
+	jump @NotOnBaseField
+
+
+
+    //@GoAfterTheBase
+    //call #senseObstacle
+    //move else *1
+    //sense ahead foehome else *2
+    //jump *8
+    //sense left foehome else *3
+    //turn left
+    //jump *5
+    //sense right foehome else *3
+    //turn right
+    //jump *2
+    //jump @GoAfterTheBase
+
+    //move else *0
+    //turn left
+    //jump *-1
+
+
+
+}

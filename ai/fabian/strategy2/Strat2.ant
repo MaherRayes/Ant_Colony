@@ -1,0 +1,26 @@
+//Breed + Gegnerbasis besetzen + Futter holen
+//Neu gebrütete Ameisen müssen auch Futterholer werden können
+#main {
+    sense here home else @getAConquerer
+    flip 4 else @getACollector
+@getABreeder
+    call #Breeder
+@getACollector
+    call #SimonCollector
+@getAConquerer
+    call #Conquer
+}
+
+//Benutzen, wenn es besseren Collector gibt
+#main2 {
+    sense here home else @choose
+    flip 2 else @getABreeder
+@getACollector
+    call #SimonCollector
+@getABreeder
+    call #Breeder
+@choose
+    flip 2 else @getAConquerer
+@getAConquerer
+    call #Conquer
+}

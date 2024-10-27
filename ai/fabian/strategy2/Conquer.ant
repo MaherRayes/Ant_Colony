@@ -1,0 +1,76 @@
+#Conquer {
+@begin
+    call #safe_dirNoFoehome
+    move else @turn
+    call #searchfoehome
+    //Ameise steht vor Gegnerbasis und guckt drauf
+    call #searchStayPlace
+    //Register 0 ist gesetzt, falls die Ameise einen Platz gefunden hat
+    test 0 else @tryAgain
+    jump @doNothing
+@turn
+    turn left
+    jump @begin
+@doNothing
+    turn left
+    jump @doNothing
+@tryAgain
+    call #safe_dirNoFoehome
+    move else @turn
+    jump @begin
+}
+
+#searchfoehome {
+@begin
+    sense here foehome else @step1
+@step1
+    sense left foehome else @step2
+    turn left
+    jump @goSuccessfullyBack
+@step2
+    sense ahead foehome else @step3
+    jump @goSuccessfullyBack
+@step3
+    sense right foehome else @goFurther
+    turn right
+    jump @goSuccessfullyBack
+@goFurther
+    call #goRandom
+    jump @begin
+@goSuccessfullyBack
+    return
+}
+
+#searchStayPlace {
+@begin
+    move else @goLeft
+    jump @test
+@goLeft
+    turn left
+    call #safe_dirNoFoehome
+    move else @bypass
+    jump @test
+@success
+    set 0
+    return
+@bypass
+    call #bypassObstacle
+    jump @test
+@test
+    sense here foehome else @step1
+    jump @success
+@step1
+    sense left foehome else @step2
+    turn left
+    jump @begin
+@step2
+    sense ahead foehome else @step3
+    jump @begin
+@step3
+    sense right foehome else @goSadBack
+    turn right
+    jump @begin
+@goSadBack
+    unset 0
+    return
+}

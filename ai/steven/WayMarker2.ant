@@ -1,0 +1,107 @@
+// Sets marker on (1,2,3) according to direction
+#mark_field_345 {
+    sense here marker 6 else @ok
+    return
+    @ok
+    mark 6
+        direction southeast else @state1
+        unmark 3
+        unmark 4
+        mark 5
+        return
+    @state1
+        direction southwest else @state2
+        unmark 3
+        mark 4
+        unmark 5
+        return
+    @state2
+        direction west else @state3
+        unmark 3
+        mark 4
+        mark 5
+        return
+    @state3
+        direction northwest else @state4
+        mark 3
+        unmark 4
+        unmark 5
+        return
+    @state4
+        direction northeast else @state5
+        mark 3
+        unmark 4
+        mark 5
+        return
+    @state5
+        mark 3
+        mark 4
+        mark 5
+        return
+}
+
+// Turn according to markers (1,2,3) on this field
+//Turns the ant into a marker direction, or a random one if none are found
+#mark_follow_345 {
+         sense here marker 3 else @state1
+         sense here marker 4 else @state2
+         sense here marker 5 else *2
+         jump @setDirWest
+         jump @setDirRandom
+     @state1
+         sense here marker 4 else @state3
+         sense here marker 5 else *2
+         jump @setDirEast
+         jump @setDirNortheast
+     @state2
+         sense here marker 5 else *2
+         jump @setDirSouthwest
+         jump @setDirSoutheast
+     @state3
+         sense here marker 5 else *2
+         jump @setDirNorthwest
+         jump @setDirNotVisitedField
+
+     @setDirNorthwest
+        direction northwest else *2
+        jump @done
+        turn left
+        direction northwest else *-1
+        jump @done
+     @setDirNortheast
+        direction northeast else *2
+        jump @done
+        turn left
+        direction northeast else *-1
+        jump @done
+     @setDirEast
+        direction east else *2
+        jump @done
+        turn left
+        direction east else *-1
+        jump @done
+     @setDirSoutheast
+        direction southeast else *2
+        jump @done
+        turn left
+        direction southeast else *-1
+        jump @done
+     @setDirSouthwest
+        direction southwest else *2
+        jump @done
+        turn left
+        direction southwest else *-1
+        jump @done
+     @setDirWest
+        direction west else *2
+        jump @done
+        turn left
+        direction west else *-1
+        jump @done
+     @setDirRandom
+        return
+     @setDirNotVisitedField
+        return
+     @done
+        return
+}

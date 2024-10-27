@@ -1,0 +1,115 @@
+//Es wird der Gegnerpfad gesucht und an die an den Gegnerpfad knüpfende Gegnerbasis eine Falle(-nmarkierung) gestellt
+//LEFT = 0
+//AHEAD = 1
+//RIGHT = 2
+#DoATrap {
+    call #searchEnemyPath
+}
+
+#searchEnemyPath {
+@begin
+    flip 2 else @turnRight
+    turn left
+    jump @search
+@turnRight
+    turn right
+    jump @search
+@search
+    flip 3 else @begin
+    sense ahead antlion else @move
+    jump @begin
+@move
+    move else @searchFreeWayToGo
+    sense ahead foemarker else @lookLeft
+    call #followEnemyParth
+@lookLeft
+    sense left foeMarker else @lookRight
+    call #followEnemyParth
+@lookRight
+    sense right foeMarker else @search
+@searchFreeToGo
+    turn left
+    move else @searchFreeToGo
+}
+
+#followEnemyParth {
+@begin
+    sense ahead foebase else @leftFoebase
+    set 1   //AHEAD
+    call #setTrap
+@leftFoebase
+    sense left foebase else @rightFoebase
+    turn left
+    set 0   //LEFT
+    call #setTrap
+@rightFoebase
+    sense right foebase else @followPath
+    turn right
+    set 2   //RIGHT
+    call #setTrap
+@followPath
+    sense ahead foemarker else @leftMarker
+    move else @followPath
+    jump @begin
+@leftMarker
+    sense left foemarker else @rightMarker
+    turn right
+    move else #ERROR
+    jump @begin
+@rightMarker
+    sense right foemarker else @GiveUp	//Kann weggelassen werden
+    turn right
+    move else #ERROR	    			//Wenn oberes weggelassen wird, dann auch @ERROR
+@GiveUp
+    jump @GiveUp
+
+}
+
+#setTrap {
+@begin
+        //Guck, ob noch keine Falle gestellt ist
+    set #TRAP
+        //Gucke zum FallenAusgang
+@testAHEAD
+    test 1 else @testLEFT
+    jump @aheadExit
+@testLEFT
+    test 0 else @testRIGHT  //LEFT
+    jump @leftExit
+@testRIGHT
+    test 2 else #ERROR     //RIGHT
+    jump @rightExit
+@aheadExit
+    turn left
+    turn left
+    turn left
+@leftExit
+    turn left
+    turn left
+@rightExit
+    turn right
+    turn right
+    jump @tryHardMove
+@tryHardMove
+    move else @tryHardMove
+    set #TRAP_EXIT
+    //Hoffe, dass Sklavenameisen kommen
+    jump @doSomething
+@doSomething
+    move else @doSomething
+    jump @doSomething
+}
+
+#ERROR {
+@begin
+    turn right
+    turn right
+    move else @turn
+    jump @return
+@turn
+    turn right
+    move else @turn
+    jump @return
+@return
+    call #searchEnemyPath
+}

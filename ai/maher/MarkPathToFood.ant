@@ -1,0 +1,50 @@
+//Mark the path of the ant to the food
+
+#MarkPathToFood{
+
+    direction southeast else *2
+    jump @markSouthEast
+    direction east else *2
+    jump @markEast
+    direction northeast else *2
+    jump @markNorthEast
+    direction northwest else *2
+    jump @markNorthWest
+    direction west else *2
+    jump @markWest
+    direction southwest else *2
+    jump @markSouthWest
+
+    @markSouthEast
+    mark 0
+    unmark 1
+    unmark 2
+    return
+    @markEast
+    unmark 0
+    mark 1
+    mark 2
+    return
+    @markNorthEast
+    unmark 0
+    mark 1
+    unmark 2
+    return
+    @markNorthWest
+    unmark 0
+    unmark 1
+    mark 2
+    return
+    @markWest
+    mark 0
+    mark 1
+    mark 2
+    return
+    @markSouthWest
+    mark 0
+    unmark 1
+    mark 2
+    return
+
+
+}

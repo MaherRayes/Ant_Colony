@@ -1,0 +1,15 @@
+//Requirement: set register 0 to false before calling this
+@checkForDanger //Set Register 0 true if there is danger,
+    unset 0
+    jump @checkForAntLion
+    jump @checkForEnemy
+    jump //Insert Jumpback address
+@checkForAntLion
+    sense ahead antlion else *2
+    set 0
+    jump *-5
+@checkForEnemy
+    sense left foe else *3
+    sense right foe else *2
+    set 0
+    jump *-9

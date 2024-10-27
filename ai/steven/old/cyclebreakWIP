@@ -1,0 +1,51 @@
+//TEST///////////////////////////////////////////////////////maybe replace with probability based cyclebreak
+test 0 else @xx0
+    test 4 else @x01
+    test 5 else @011
+    jump @cycleBreak //111
+@xx0
+    test 4 else @x00
+    test 5 else @010
+    jump @110
+@x01
+    test 5 else @001
+    jump @101
+@x00
+    test 5 else @000
+    jump @100
+@000
+    unset 0
+    unset 4
+    unset 5
+    jump @begin
+@001
+    set 0
+    unset 4
+    unset 5
+    jump @begin
+@010
+    unset 0
+    set 4
+    unset 5
+    jump @begin
+@011
+    set 0
+    set 4
+    unset 5
+    jump @begin
+@100
+    unset 0
+    unset 4
+    set 5
+    jump @begin
+@101
+    set 0
+    unset 4
+    set 5
+    jump @begin
+@110
+    unset 0
+    set 4
+    set 5
+    jump @begin
+//TEST///////////////////////////////////////////////////////

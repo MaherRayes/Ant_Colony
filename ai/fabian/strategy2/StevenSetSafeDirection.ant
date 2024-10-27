@@ -1,0 +1,32 @@
+#safe_dirNoFoehome{
+@checkForAntLion
+	sense ahead antlion else @checkForEnemy
+	turn left
+	jump @checkForAntLion
+@checkForEnemy
+    sense left foe else @return
+    sense right foe else @return
+    turn left
+    jump @checkForAntLion
+@return
+    return
+}
+
+#safe_dirWithFoehome{
+@checkForAntLion
+	sense ahead antlion else @checkForFoehome
+	turn left
+	jump @checkForAntLion
+@checkForFoehome
+	sense ahead foehome else @checkForEnemy
+	turn left
+	jump@checkForAntLion
+@checkForEnemy
+    sense left foe else @turnLeft
+    sense right foe else @return
+@turnLeft
+    turn left
+    jump @checkForAntLion
+@return
+    return
+}

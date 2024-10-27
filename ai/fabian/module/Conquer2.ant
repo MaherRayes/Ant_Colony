@@ -1,0 +1,155 @@
+//Besetzt den Rand der Gegnerbasis
+//tryHardMOve wurde durch #searchOtherWay ersetzt
+//Zu viele Ameisen sterben sinnlos
+#Conquer2 {
+@begin
+    move else @turn
+    call #searchfoehome
+    //Hier steht die Ameise vor der Gegnerbasis und guckt auf sie
+    call #searchStayPlace
+    //Register 0 ist gesetzt, wenn Ameise Platz gefunden hat
+    test 0 else @begin
+    jump @doNothing
+@turn
+    turn left
+    jump @begin
+@doNothing
+    turn right
+    jump @doNothing
+@giveUp
+    turn right
+    move else @giveUp
+    flip 2 else @giveUp
+    jump @begin
+}
+
+#searchfoehome2 {
+@senseAhead
+    sense ahead foehome else @senseLeft
+    return
+@senseLeft
+    sense left foehome else @senseRight
+    turn left
+    return
+@senseRight
+    sense right foehome else @start
+    turn right
+    return
+@start
+    flip 10 else @turn
+    jump @move
+@turn
+    flip 2 else @turnRight
+    turn left
+    jump @move
+@turnRight
+    turn right
+    jump @move
+@move
+    sense ahead antlion else @reallyMove
+    turn left
+    jump @move
+@reallyMove
+    move else @turnLeftThenMove
+    jump @senseAhead
+@turnLeftThenMove
+    turn left
+    jump @move
+}
+
+//Funktioniert nur für leichte Basen
+#searchStayPlace2 {
+@begin
+    sense ahead friend else @stayHere
+    jump @goToNext
+@stayHere
+    move else @searchOtherWay1
+    sense here foehome else @begin
+    set 0
+    return
+@goToNext
+    turn left
+    move else @searchOtherWay1
+    sense right foehome else @moveRight
+    turn right
+    jump @begin
+@continue1
+    sense right foehome else @moveRight
+    turn right
+    jump @begin
+@moveRight
+    turn right
+    move else @searchOtherWay2
+    jump @begin
+@continue2
+    sense ahead foehome else @moveRight
+    jump @begin
+@searchOtherWay1
+    call #searchOtherWay
+    sense here foehome else @continue1
+    set 0
+    return
+@searchOtherWay2
+    call #searchOtherWay
+    sense here foehome else @continue2
+    set 0
+    return
+}
+
+#tryHardMove2 {
+    @begin
+    move else @begin
+    return
+}
+//Angepasst für aktuelle KI!
+#searchOtherWay2 {
+@begin
+    sense ahead rock else @goAhead
+    sense left rock else @goLeft
+    sense right rock else @goRight
+    turn left
+    turn left
+    jump @begin
+@goAhead
+    move else @goRight
+    sense here foehome else *2
+    jump @doNothing
+    return
+@goRight
+    turn right
+    move else @turnLeftThenGoLeft
+    sense here foehome else *2
+    jump @doNothing
+    turn left
+    move else @begin
+    sense here foehome else *2
+    jump @doNothing
+    jump @begin
+    return
+@goLeft
+    turn left
+    move else @turnThenBegin
+    sense here foehome else *2
+    jump @doNothing
+    turn right
+    move else @begin
+    sense here foehome else *2
+    jump @doNothing
+    return
+@turnThenBegin
+    turn left
+    turn left
+    jump @begin
+@turnLeftThenGoLeft
+    turn left
+    jump @goLeft
+@doNothing
+    turn left
+    jump @doNothing
+}
+
+#somethingClever2 {
+@begin
+    turn left
+    jump @begin
+}

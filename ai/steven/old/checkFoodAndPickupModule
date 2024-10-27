@@ -1,0 +1,10 @@
+//picks up food if there is and set the register 0 to true
+
+
+#checkFoodAndPickup{
+	pickup else @continue
+@continue
+	sense here friendfood else @return
+	set 0
+	return
+}

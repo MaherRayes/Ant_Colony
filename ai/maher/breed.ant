@@ -1,0 +1,31 @@
+//After the ant takes the food it waits to breed
+#breed {
+    @begin
+    sense ahead food else *2
+    jump @breedForEver
+    sense left food else *2
+    jump @breedForEver
+    sense right food else *2
+    jump @breedForEver
+    turn left
+    turn left
+    turn left
+    sense ahead food else *2
+    jump @breedForEver
+    sense right food else *2
+    jump @breedForEver
+    sense left food else *2
+    jump @breedForEver
+    return
+
+
+    @breedForEver
+    sense here friendfood else @return
+    turn left
+    breed else *-2
+    pickup else @return
+    jump @begin
+
+
+    return
+}

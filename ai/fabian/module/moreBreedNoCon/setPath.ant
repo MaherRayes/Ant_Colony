@@ -1,0 +1,66 @@
+//012 macht heimweg(kehrt Richtung um)
+
+#setPath {
+@begin
+    //Gucken, von wo man kommt
+    sense here marker 0 else @markperhabs1
+    return
+@markperhabs1
+    sense here marker 1 else @markperhabs2
+    return
+@markperhabs2
+    sense here marker 2 else @markIt
+    return
+@markIt
+    direction northwest else @next1
+    jump @southeast
+@next1
+    direction northeast else @next2
+    jump @southwest
+@next2
+    direction east else @next3
+    jump @west
+@next3
+    direction southeast else @next4
+    jump @northwest
+@next4
+    direction southwest else @next5
+    jump @northeast
+@next5
+    direction west else @ERROR
+    jump @east
+@ERROR
+    jump @ERROR
+@northwest
+    unmark 2
+    unmark 1
+    mark 0
+    jump @end
+@northeast
+    unmark 2
+    mark 1
+    unmark 0
+    jump @end
+@east
+    unmark 2
+    mark 1
+    mark 0
+    jump @end
+@southeast
+    mark 2
+    unmark 1
+    unmark 0
+    jump @end
+@southwest
+    mark 2
+    unmark 1
+    mark 0
+    jump @end
+@west
+    mark 2
+    mark 1
+    mark 0
+    jump @end
+@end
+    jump @begin
+}

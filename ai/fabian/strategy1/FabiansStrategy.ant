@@ -1,0 +1,124 @@
+//Besetzt den Rand der Gegnerbasis
+//tryHardMOve wurde durch #searchOtherWay ersetzt
+#fabianMain {
+    jump @begin
+@turn
+    turn left
+    jump @begin
+@begin
+    move else @turn
+    call #searchfoehome
+    //Hier steht die Ameise vor der Gegnerbasis und guckt auf sie
+    call #searchStayPlace
+    //Basis ist schon vollständig umzingelt, wenn Register 0 gesetzt ist
+    test 0 else @doNothing
+    call #somethingClever
+@doNothing
+    turn right
+    jump @doNothing
+@giveUp
+    move else @giveUp
+    jump @giveUp
+}
+
+//Vor foehome ist 4 markiert, wenn eine Ameise diese Stelle schon besetzt hat
+//Vor foehome ist 5 markiert, wenn die
+#searchfoehome {
+@senseAhead
+    sense ahead foehome else @senseLeft
+    return
+@senseLeft
+    sense left foehome else @senseRight
+    turn left
+    return
+@senseRight
+    sense right foehome else @start
+    turn right
+    return
+@start
+    flip 10 else @turn
+    jump @move
+@turn
+    flip 2 else @turnRight
+    turn left
+    jump @move
+@turnRight
+    turn right
+    jump @move
+@move
+    sense ahead antlion else @reallyMove
+    turn left
+    jump @move
+@reallyMove
+    move else @turnLeftThenMove
+    jump @senseAhead
+@turnLeftThenMove
+    turn left
+    jump @move
+}
+
+//Funktioniert nur für leichte Basen
+#searchStayPlace {
+@begin
+    sense ahead friend else @stayHere
+    jump @goToNext
+@stayHere
+    move else @begin
+    return
+@goToNext
+    turn left
+    call #searchOtherWay
+    sense right foehome else @moveRight
+    turn right
+    jump @begin
+@moveRight
+    turn right
+    call #searchOtherWay
+    sense ahead foehome else @moveRight
+    jump @begin
+}
+
+#tryHardMove {
+    @begin
+    move else @begin
+    return
+}
+
+#searchOtherWay {
+@begin
+    sense here foehome else @begin
+@start
+    sense ahead rock else @goAhead
+    sense left rock else @goLeft
+    sense right rock else @goRight
+    jump @begin
+@goAhead
+    move else @begin
+    return
+@goRight
+    turn right
+    move else @turnLeftThenBegin
+    turn left
+    turn left
+    move else @begin
+    jump @begin
+    return
+@goLeft
+    turn left
+    move else @turnRightThenBegin
+    turn right
+    turn right
+    move else @begin
+    return
+@turnRightThenBegin
+    turn right
+    jump @begin
+@turnLeftThenBegin
+    turn left
+    jump @begin
+}
+
+#somethingClever {
+@begin
+    jump @begin
+}

@@ -1,0 +1,20 @@
+//Register 1 wird gesetzt, wenn es erfolgreich war
+#bypassObstacle {
+@begin
+    call #safe_dirNoFoehome
+    move else @bypassLeft
+    return
+@bypassLeft
+    turn left
+    move else @fail
+    call #safe_dirNoFoehome
+    turn right
+    move else @fail
+    call #safe_dirNoFoehome
+    turn left
+    set 1
+    return
+@fail
+    unset 1
+    return
+}

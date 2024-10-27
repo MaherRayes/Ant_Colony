@@ -1,0 +1,30 @@
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="RESULT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <logger name="saarland.cispa.sopra" level="DEBUG" />
+
+    <root level="ERROR">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <logger name="results" level="TRACE">
+        <appender-ref ref="RESULT"/>
+        <additive>false</additive>
+    </logger>
+
+</configuration>

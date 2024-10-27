@@ -1,0 +1,40 @@
+//only sets the direction to one that is not dangerous
+//dangerous are antlions and at least 2 enemy ants
+//optionally, foehome can be counted as danger aswell
+
+#safe_dirNoFoehome{
+@checkForAntLion
+	sense ahead antlion else *3
+	turn left
+	jump @checkForAntLion
+@checkForEnemy
+    sense left foe else *4
+    sense right foe else *3
+    turn left
+    jump @checkForAntLion
+    return
+}
+#safe_dirNoFoehomeForMarkers{
+@checkForEnemy
+    sense left foe else *4
+    sense right foe else *3
+    turn left
+    jump @checkForEnemy
+    return
+}
+#safe_dirWithFoehome{
+@checkForAntLion
+	sense ahead antlion else *3
+	turn left
+	jump @checkForAntLion
+@checkForFoehome
+	sense ahead foehome else *3
+	turn left
+	jump@checkForAntLion
+@checkForEnemy
+    sense left foe else *4
+    sense right foe else *3
+    turn left
+    jump @checkForAntLion
+    return
+}

@@ -1,0 +1,389 @@
+brain "HyruleV5" {
+	sense here home else 2
+	set 5
+	flip 2 else 18  //target: @return//target: @return //BOM: #randomize_dir
+	flip 2 else 11 //target: @turnRight
+	flip 2 else 6
+	turn left
+	flip 2 else 8
+	turn left
+	flip 2 else 10
+	turn left
+	jump 18  //target: @return//target: @return
+	flip 2 else 13 //label: @turnRight
+	turn right
+	flip 2 else 15
+	turn right
+	flip 2 else 17
+	turn right
+	jump 18  //target: @return//target: @return // EOM: #randomize_dir
+	sense here food else 20  //target: @begin//target: @weiterSuchen //label: @begin //BOM: #findFood //label: @begin
+	jump 86  //target: @return//target: @return
+	unset 1 //BOM: #sense_food //label: @weiterSuchen
+	sense ahead food else 24  //target: @weiterSuchen//target: @weiterSuchen1
+	set 1
+	jump 31   //target: @return//target: @return//target: @return
+	sense left food else 27  //target: @weiterSuchen//target: @weiterSuchen2 //label: @weiterSuchen1
+	turn left
+	set 1
+	sense right food else 31   //target: @return//target: @weiterSuchen//target: @return //label: @weiterSuchen2
+	turn right
+	set 1
+	jump 31   //target: @return//target: @return//target: @return // EOM: #sense_food
+	sense ahead antlion else 33 //target: @goOn1 //BOM: #safe_move //label: @tryMove
+	jump 81 //target: @occupied
+	sense ahead foehome else 35 //target: @goOn2 //label: @goOn1
+	jump 81  //target: @occupied//label: @fail
+	sense left foe else 38 //target: @goOn3 //label: @goOn2
+	sense right foe else 38 //target: @goOn3
+	jump 81 //target: @occupied
+	move else 34 //target: @fail //label: @goOn3
+	jump 40      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_move
+	sense here marker 0 else 42 //BOM: #mark_field_123
+	jump 75   //target: @return//target: @return//target: @return
+	sense here marker 1 else 44
+	jump 75   //target: @return//target: @return//target: @return
+	sense here marker 2 else 46
+	jump 75   //target: @return//target: @return//target: @return
+	direction southeast else 51 //target: @state1
+	unmark 0
+	unmark 1
+	mark 2
+	jump 75   //target: @return//target: @return//target: @return
+	direction southwest else 56 //target: @state2 //label: @state1
+	unmark 0
+	mark 1
+	unmark 2
+	jump 75   //target: @return//target: @return//target: @return
+	direction west else 61 //target: @state3 //label: @state2
+	unmark 0
+	mark 1
+	mark 2
+	jump 75   //target: @return//target: @return//target: @return
+	direction northwest else 66 //target: @state4 //label: @state3
+	mark 0
+	unmark 1
+	unmark 2
+	jump 75   //target: @return//target: @return//target: @return
+	direction northeast else 71 //target: @state5 //label: @state4
+	mark 0
+	unmark 1
+	mark 2
+	jump 75   //target: @return//target: @return//target: @return
+	mark 0 //label: @state5
+	mark 1
+	mark 2
+	jump 75   //target: @return//target: @return//target: @return // EOM: #mark_field_123
+	flip 9 else 80   //target: @return//target: @return//target: @return //BOM: #randomized_turn
+	flip 2 else 79 //target: @turnleft
+	turn right
+	jump 80   //target: @return//target: @return//target: @return
+	turn left //label: @turnleft // EOM: #randomized_turn
+	jump 18  //target: @begin//target: @begin
+	flip 2 else 84 //target: @turnOtherSide //label: @occupied
+	turn left
+	jump 31 //target: @tryMove
+	turn right //label: @turnOtherSide
+	jump 31 //target: @tryMove // EOM: #findFood
+	pickup else 18 //target: @begin //label: @tryPickup
+	turn left
+	turn left
+	turn left
+	sense here friendfood else 86 //target: @tryPickup
+	test 5 else 115 //target: @goHome
+	turn left  //target: @begin//label: @begin //BOM: #make_love
+	turn left
+	sense ahead antlion else 96 //target: @goOn1 //BOM: #safe_move
+	jump 114  //target: @return//target: @return
+	sense ahead foehome else 98 //target: @goOn2 //label: @goOn1
+	jump 114   //target: @return//target: @return//label: @fail
+	sense left foe else 101 //target: @goOn3 //label: @goOn2
+	sense right foe else 101 //target: @goOn3
+	jump 114  //target: @return//target: @return
+	move else 97 //target: @fail //label: @goOn3
+	jump 103   //target: @return//target: @return//target: @return // EOM: #safe_move
+	turn left
+	turn left
+	turn left
+	flip 3 else 108
+	unset 5
+	flip 100 else 110 //label: @waitForBreed
+	jump 114  //target: @return//target: @return
+	breed else 108 //target: @waitForBreed
+	move else 114  //target: @return//target: @return
+	pickup else 114  //target: @return//target: @return
+	jump 92  //target: @begin//target: @begin // EOM: #make_love
+	sense here food else 115 //target: @goHome
+	sense here home else 117  //target: @begin//target: @weiterSuchen //label: @begin //BOM: #findHome //label: @goHome
+	jump 385  //target: @return//target: @return
+	unset 0 //BOM: #mark_follow_123 //label: @weiterSuchen
+	sense here marker 0 else 123 //target: @state1
+	sense here marker 1 else 127 //target: @state2
+	sense here marker 2 else 122
+	jump 158 //target: @setDirWest
+	jump 163 //target: @setDirRandom
+	sense here marker 1 else 130 //target: @state3 //label: @state1
+	sense here marker 2 else 126
+	jump 143 //target: @setDirEast
+	jump 138 //target: @setDirNortheast
+	sense here marker 2 else 129 //label: @state2
+	jump 153 //target: @setDirSouthwest
+	jump 148 //target: @setDirSoutheast
+	sense here marker 2 else 132 //label: @state3
+	jump 133 //target: @setDirNorthwest
+	jump 164 //target: @setDirNotVisitedField
+	direction northwest else 135 //label: @setDirNorthwest
+	jump 166 //target: @done
+	turn left
+	direction northwest else 135
+	jump 166 //target: @done
+	direction northeast else 140 //label: @setDirNortheast
+	jump 166 //target: @done
+	turn left
+	direction northeast else 140
+	jump 166 //target: @done
+	direction east else 145 //label: @setDirEast
+	jump 166 //target: @done
+	turn left
+	direction east else 145
+	jump 166 //target: @done
+	direction southeast else 150 //label: @setDirSoutheast
+	jump 166 //target: @done
+	turn left
+	direction southeast else 150
+	jump 166 //target: @done
+	direction southwest else 155 //label: @setDirSouthwest
+	jump 166 //target: @done
+	turn left
+	direction southwest else 155
+	jump 166 //target: @done
+	direction west else 160 //label: @setDirWest
+	jump 166 //target: @done
+	turn left
+	direction west else 160
+	jump 166 //target: @done
+	jump 167    //target: @return//target: @return//target: @return//target: @return //label: @setDirRandom
+	set 0 //label: @setDirNotVisitedField
+	jump 167    //target: @return//target: @return//target: @return//target: @return
+	jump 167    //target: @return//target: @return//target: @return//target: @return //label: @done // EOM: #mark_follow_123
+	sense ahead antlion else 169 //target: @goOn1 //BOM: #safe_move
+	jump 199 //target: @callFail1
+	sense ahead foehome else 171 //target: @goOn2 //label: @goOn1
+	jump 199  //target: @callFail1//label: @fail
+	sense left foe else 174 //target: @goOn3 //label: @goOn2
+	sense right foe else 174 //target: @goOn3
+	jump 199 //target: @callFail1
+	move else 170 //target: @fail //label: @goOn3
+	jump 176     //target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_move
+	unset 1 //BOM: #sense_home
+	sense ahead home else 180  //target: @weiterSuchen//target: @weiterSuchen1
+	unset 0
+	jump 187   //target: @return//target: @return//target: @return
+	sense left home else 183  //target: @weiterSuchen//target: @weiterSuchen2 //label: @weiterSuchen1
+	turn left
+	set 1
+	sense right home else 187   //target: @return//target: @weiterSuchen//target: @return //label: @weiterSuchen2
+	turn right
+	set 1
+	jump 187   //target: @return//target: @return//target: @return // EOM: #sense_home
+	test 1 else 198 //target: @erfolgloseSuche
+	sense ahead antlion else 190 //target: @goOn1 //BOM: #safe_move
+	jump 197 //target: @callFail2
+	sense ahead foehome else 192 //target: @goOn2 //label: @goOn1
+	jump 197  //target: @callFail2//label: @fail
+	sense left foe else 195 //target: @goOn3 //label: @goOn2
+	sense right foe else 195 //target: @goOn3
+	jump 197 //target: @callFail2
+	move else 191 //target: @fail //label: @goOn3
+	jump 197     //target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_move
+	jump 115  //target: @begin//target: @begin //label: @callFail2
+	jump 115  //target: @begin//target: @begin //label: @erfolgloseSuche
+	turn left //BOM: #ausweichhandling //label: @callFail1
+	sense ahead antlion else 202  //target: @goOn1//target: @goOn1 //BOM: #safe_move
+	jump 383 //target: @seriousCallFail
+	sense ahead foehome else 204  //target: @goOn2//target: @goOn2 //label: @goOn1
+	jump 383  //target: @seriousCallFail//label: @fail
+	sense left foe else 207  //target: @goOn2//target: @goOn3 //label: @goOn2
+	sense right foe else 207 //target: @goOn3
+	jump 383 //target: @seriousCallFail
+	move else 203 //target: @fail //label: @goOn3
+	jump 209     //target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_move
+	unset 0 //BOM: #mark_follow_123
+	sense here marker 0 else 215 //target: @state1
+	sense here marker 1 else 219 //target: @state2
+	sense here marker 2 else 214
+	jump 250 //target: @setDirWest
+	jump 255 //target: @setDirRandom
+	sense here marker 1 else 222 //target: @state3 //label: @state1
+	sense here marker 2 else 218
+	jump 235 //target: @setDirEast
+	jump 230 //target: @setDirNortheast
+	sense here marker 2 else 221 //label: @state2
+	jump 245 //target: @setDirSouthwest
+	jump 240 //target: @setDirSoutheast
+	sense here marker 2 else 224 //label: @state3
+	jump 225 //target: @setDirNorthwest
+	jump 256 //target: @setDirNotVisitedField
+	direction northwest else 227 //label: @setDirNorthwest
+	jump 258 //target: @done
+	turn left
+	direction northwest else 227
+	jump 258 //target: @done
+	direction northeast else 232 //label: @setDirNortheast
+	jump 258 //target: @done
+	turn left
+	direction northeast else 232
+	jump 258 //target: @done
+	direction east else 237 //label: @setDirEast
+	jump 258 //target: @done
+	turn left
+	direction east else 237
+	jump 258 //target: @done
+	direction southeast else 242 //label: @setDirSoutheast
+	jump 258 //target: @done
+	turn left
+	direction southeast else 242
+	jump 258 //target: @done
+	direction southwest else 247 //label: @setDirSouthwest
+	jump 258 //target: @done
+	turn left
+	direction southwest else 247
+	jump 258 //target: @done
+	direction west else 252 //label: @setDirWest
+	jump 258 //target: @done
+	turn left
+	direction west else 252
+	jump 258 //target: @done
+	jump 259     //target: @return//target: @return//target: @return//target: @return//target: @return //label: @setDirRandom
+	set 0 //label: @setDirNotVisitedField
+	jump 259     //target: @return//target: @return//target: @return//target: @return//target: @return
+	jump 259     //target: @return//target: @return//target: @return//target: @return//target: @return //label: @done // EOM: #mark_follow_123
+	test 0 else 261 //target: @goOn1
+	jump 384   //target: @return//target: @return//target: @return
+	turn right //label: @goOn1
+	sense ahead antlion else 264  //target: @goOn1//target: @goOn1 //BOM: #safe_move
+	jump 383 //target: @seriousCallFail
+	sense ahead foehome else 266  //target: @goOn2//target: @goOn2 //label: @goOn1
+	jump 383  //target: @seriousCallFail//label: @fail
+	sense left foe else 269  //target: @goOn2//target: @goOn3 //label: @goOn2
+	sense right foe else 269 //target: @goOn3
+	jump 383 //target: @seriousCallFail
+	move else 265 //target: @fail //label: @goOn3
+	jump 271     //target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_move
+	unset 0 //BOM: #mark_follow_123
+	sense here marker 0 else 277 //target: @state1
+	sense here marker 1 else 281 //target: @state2
+	sense here marker 2 else 276
+	jump 312 //target: @setDirWest
+	jump 317 //target: @setDirRandom
+	sense here marker 1 else 284 //target: @state3 //label: @state1
+	sense here marker 2 else 280
+	jump 297 //target: @setDirEast
+	jump 292 //target: @setDirNortheast
+	sense here marker 2 else 283 //label: @state2
+	jump 307 //target: @setDirSouthwest
+	jump 302 //target: @setDirSoutheast
+	sense here marker 2 else 286 //label: @state3
+	jump 287 //target: @setDirNorthwest
+	jump 318 //target: @setDirNotVisitedField
+	direction northwest else 289 //label: @setDirNorthwest
+	jump 320 //target: @done
+	turn left
+	direction northwest else 289
+	jump 320 //target: @done
+	direction northeast else 294 //label: @setDirNortheast
+	jump 320 //target: @done
+	turn left
+	direction northeast else 294
+	jump 320 //target: @done
+	direction east else 299 //label: @setDirEast
+	jump 320 //target: @done
+	turn left
+	direction east else 299
+	jump 320 //target: @done
+	direction southeast else 304 //label: @setDirSoutheast
+	jump 320 //target: @done
+	turn left
+	direction southeast else 304
+	jump 320 //target: @done
+	direction southwest else 309 //label: @setDirSouthwest
+	jump 320 //target: @done
+	turn left
+	direction southwest else 309
+	jump 320 //target: @done
+	direction west else 314 //label: @setDirWest
+	jump 320 //target: @done
+	turn left
+	direction west else 314
+	jump 320 //target: @done
+	jump 321     //target: @return//target: @return//target: @return//target: @return//target: @return //label: @setDirRandom
+	set 0 //label: @setDirNotVisitedField
+	jump 321     //target: @return//target: @return//target: @return//target: @return//target: @return
+	jump 321     //target: @return//target: @return//target: @return//target: @return//target: @return //label: @done // EOM: #mark_follow_123
+	test 0 else 323 //target: @goOn2
+	jump 384   //target: @return//target: @return//target: @return
+	turn right //label: @goOn2
+	sense ahead antlion else 326  //target: @goOn1//target: @goOn1 //BOM: #safe_move
+	jump 383 //target: @seriousCallFail
+	sense ahead foehome else 328  //target: @goOn2//target: @goOn2 //label: @goOn1
+	jump 383  //target: @seriousCallFail//label: @fail
+	sense left foe else 331  //target: @goOn2//target: @goOn3 //label: @goOn2
+	sense right foe else 331 //target: @goOn3
+	jump 383 //target: @seriousCallFail
+	move else 327 //target: @fail //label: @goOn3
+	jump 333     //target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_move
+	unset 0 //BOM: #mark_follow_123
+	sense here marker 0 else 339 //target: @state1
+	sense here marker 1 else 343 //target: @state2
+	sense here marker 2 else 338
+	jump 374 //target: @setDirWest
+	jump 379 //target: @setDirRandom
+	sense here marker 1 else 346 //target: @state3 //label: @state1
+	sense here marker 2 else 342
+	jump 359 //target: @setDirEast
+	jump 354 //target: @setDirNortheast
+	sense here marker 2 else 345 //label: @state2
+	jump 369 //target: @setDirSouthwest
+	jump 364 //target: @setDirSoutheast
+	sense here marker 2 else 348 //label: @state3
+	jump 349 //target: @setDirNorthwest
+	jump 380 //target: @setDirNotVisitedField
+	direction northwest else 351 //label: @setDirNorthwest
+	jump 382 //target: @done
+	turn left
+	direction northwest else 351
+	jump 382 //target: @done
+	direction northeast else 356 //label: @setDirNortheast
+	jump 382 //target: @done
+	turn left
+	direction northeast else 356
+	jump 382 //target: @done
+	direction east else 361 //label: @setDirEast
+	jump 382 //target: @done
+	turn left
+	direction east else 361
+	jump 382 //target: @done
+	direction southeast else 366 //label: @setDirSoutheast
+	jump 382 //target: @done
+	turn left
+	direction southeast else 366
+	jump 382 //target: @done
+	direction southwest else 371 //label: @setDirSouthwest
+	jump 382 //target: @done
+	turn left
+	direction southwest else 371
+	jump 382 //target: @done
+	direction west else 376 //label: @setDirWest
+	jump 382 //target: @done
+	turn left
+	direction west else 376
+	jump 382 //target: @done
+	jump 383     //target: @return//target: @return//target: @return//target: @return//target: @return //label: @setDirRandom
+	set 0 //label: @setDirNotVisitedField
+	jump 383     //target: @return//target: @return//target: @return//target: @return//target: @return
+	jump 383     //target: @return//target: @return//target: @return//target: @return//target: @return //label: @done // EOM: #mark_follow_123
+	jump 384   //target: @return//target: @return//target: @return //label: @seriousCallFail // EOM: #ausweichhandling
+	jump 115  //target: @begin//target: @begin // EOM: #findHome
+	drop else 18 //target: @begin
+	jump 18 //target: @begin
+}

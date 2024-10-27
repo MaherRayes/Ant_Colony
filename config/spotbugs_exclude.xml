@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<FindBugsFilter>
+    <Match>
+        <Package name="~saarland\.cispa\.sopra\.antlr.*" />
+    </Match>
+
+    <Match>
+        <Bug code="FCCD,CLI,PRMC,EXS,NAB,FS"/>
+    </Match>
+
+</FindBugsFilter>

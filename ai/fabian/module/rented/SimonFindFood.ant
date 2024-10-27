@@ -1,0 +1,53 @@
+#findFood {
+//        call #basis_verlassen
+        @begin
+        sense here food else @weiterSuchen
+        return
+        @weiterSuchen
+        call #sense_food
+        @tryMove
+        call #safe_move
+        test 0 else @occupied
+        call #mark_field_123
+        call #randomized_turn
+        jump @begin
+        @occupied
+        turn left
+        jump @tryMove
+}
+
+#sense_food {
+        unset 1
+        sense ahead food else @weiterSuchen1
+        set 1
+        return
+        @weiterSuchen1
+        sense left food else @weiterSuchen2
+        turn left
+        set 1
+        @weiterSuchen2
+        sense right food else @return
+        turn right
+        set 1
+        return
+}
+
+#basis_verlassen {
+    @begin
+    sense ahead home else @goOn
+    sense left home else @turnLeft
+    sense right home else @turnRight
+    call #safe_move
+    jump @begin
+    @turnRight
+    turn right
+    call #safe_move
+    return
+    @turnLeft
+    turn left
+    call #safe_move
+    return
+    @goOn
+    call #safe_move
+    return
+}

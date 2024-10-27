@@ -1,0 +1,67 @@
+#main {
+    // Register 5 := Should breed!
+    sense here home else *2
+    set 5
+
+    call #randomize_dir
+    @begin
+//    call #basis_verlassen
+    call #findFood
+
+    @tryPickup
+    pickup else @begin
+    turn left
+    turn left
+    turn left
+
+    // iff not, we have breeded!
+    sense here friendfood else @tryPickup
+
+    test 5 else @goHome
+    call #make_love
+
+    sense here food else @goHome
+
+
+    @goHome
+    call #findHome
+    drop else @begin
+    jump @begin
+}
+
+// PARAM 0: 1 = Success, 0 = Failure
+// Also turns ant!
+#safe_move {
+sense ahead antlion else @goOn1
+jump &fail
+@goOn1
+sense ahead foehome else @goOn2
+@fail
+jump &fail
+@goOn2
+sense left foe else @goOn3
+sense right foe else @goOn3
+jump &fail
+@goOn3
+move else @fail
+return
+}
+
+
+#randomized_turn {
+        flip 9 else @return
+        flip 2 else @turnleft
+        turn right
+        return
+        @turnleft
+        turn left
+}
+
+#randomize_dir {
+    flip 3 else @return
+    flip 2 else @turnleft
+    turn right
+    return
+    @turnleft
+    turn left
+}

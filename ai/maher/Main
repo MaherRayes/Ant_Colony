@@ -1,0 +1,74 @@
+//follows the markers to food until it has been picked up, sets the register 0 to true
+
+
+#FollowFood{
+	@setDirectionWithMarkerFollowToFood
+	sense here marker 0 else @state1
+	sense here marker 1 else @state2
+	sense here marker 2 else *2
+	jump @setDirWest
+	jump @setDirRandom
+	@state1
+	sense here marker 1 else @state3
+	sense here marker 2 else *2
+	jump @setDirEast
+	jump @setNortheast
+	@state2
+	sense here marker 2 else *2
+	jump @setDirSouthwest
+	jump @setDirSoutheast
+	@state3
+	sense here marker 2 else *2
+	jump @setDirNorthwest
+	jump @setDirNotVisitedField
+	@setDirNorthwest
+	direction northwest else *2
+	jump @return
+	turn left
+	direction northwest else *-1
+	jump @done
+	@setDirNortheast
+	direction northeast else *2
+	jump @done
+	turn left
+	direction northeast else *-1
+	jump @done
+	@setDirEast
+	direction east else *2
+	jump @done
+	turn left
+	direction east else *-1
+	jump @done
+	@setDirSoutheast
+	direction southeast else *2
+	jump @done
+	turn left
+	direction southeast else *-1
+	jump @done
+	@setDirSouthwest
+	direction southwest else *2
+	jump @done
+	turn left
+	direction southwest else *-1
+	jump @done
+	@setDirWest
+	direction west else *2
+	jump @done
+	turn left
+	direction west else *-1
+	jump @done
+	@setDirRandom
+	//TODO maybe change strategy
+	flip 3 else *2
+	jump @done
+	flip 2 else *3
+	turn left
+	jump @done
+	turn right
+	jump @done
+	@setDirNotVisitedField
+	//TODO add new strategy for non visited fields
+	jump @setDirRandom
+	@done
+	return
+}

@@ -1,0 +1,61 @@
+#findHome {
+    @begin
+    sense here home else @weiterSuchen
+    return
+    @weiterSuchen
+    call #mark_follow_123
+// TODO change
+    call #safe_move @callFail1
+//    call #mark_field_345
+    @callFail1
+    call #sense_home
+    test 1 else @erfolgloseSuche
+    call #safe_move @callFail2
+    @callFail2
+    jump @begin
+    @erfolgloseSuche
+    jump @begin
+
+    @callFail1
+    call #ausweichhandling
+    jump @begin
+
+}
+
+#sense_home {
+unset 1
+sense ahead home else @weiterSuchen1
+unset 0
+return
+@weiterSuchen1
+sense left home else @weiterSuchen2
+turn left
+set 1
+@weiterSuchen2
+sense right home else @return
+turn right
+set 1
+return
+}
+
+#ausweichhandling {
+    // Problem: Wir kommen nicht weiter! Wie können wir Stau verhindern?
+    turn left
+    call #safe_move @seriousCallFail
+    call #mark_follow_123
+    test 0 else @goOn1
+    return
+    @goOn1
+    turn right
+    call #safe_move @seriousCallFail
+    call #mark_follow_123
+    test 0 else @goOn2
+    return
+    @goOn2
+    turn right
+    call #safe_move @seriousCallFail
+    call #mark_follow_123
+
+    @seriousCallFail
+    return
+}

@@ -1,0 +1,5 @@
+#checkFoodDropOnHome{
+	sense here home else @return
+	drop else @return
+	return
+}

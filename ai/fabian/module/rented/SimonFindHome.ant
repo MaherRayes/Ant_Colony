@@ -1,0 +1,33 @@
+#findHome {
+    @begin
+    sense here home else @weiterSuchen
+    return
+    @weiterSuchen
+    sense here friendfood else @goBack
+    call #mark_follow_123
+    call #safe_move
+    call #sense_home
+    test 1 else @erfolgloseSuche
+    call #safe_move
+    jump @begin
+    @erfolgloseSuche
+    jump @begin
+    @goBack
+    call #findFood
+}
+
+#sense_home {
+unset 1
+sense ahead home else @weiterSuchen1
+unset 0
+return
+@weiterSuchen1
+sense left home else @weiterSuchen2
+turn left
+set 1
+@weiterSuchen2
+sense right home else @return
+turn right
+set 1
+return
+}

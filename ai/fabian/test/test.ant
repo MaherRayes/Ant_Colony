@@ -1,0 +1,14 @@
+//Benutzen, wenn es besseren Collector gibt
+#main {
+    sense here home else @notHome
+    jump @home
+@home
+    flip 2 else @getABreeder
+    jump @getACollector
+@notHome
+    jump @getABreeder
+@getABreeder
+    call #Breeder
+@getACollector
+    call #collectFoodWithBackway
+}

@@ -1,0 +1,74 @@
+//interprets the markers on the ground to home (markers 3-5) and sets the ant direction to it
+//if none are found, it sets the direction to random
+
+#interpretMarkerHome{
+	@setDirectionWithMarkerFollowToFood
+	sense here marker 3 else @state1
+	sense here marker 4 else @state2
+	sense here marker 5 else *2
+	jump @setDirWest
+	jump @setDirRandom
+	@state1
+	sense here marker 4 else @state3
+	sense here marker 5 else *2
+	jump @setDirEast
+	jump @setNortheast
+	@state2
+	sense here marker 5 else *2
+	jump @setDirSouthwest
+	jump @setDirSoutheast
+	@state3
+	sense here marker 5 else *2
+	jump @setDirNorthwest
+	jump @setDirNotVisitedField
+	@setDirNorthwest
+	direction northwest else *2
+	jump @return
+	turn left
+	direction northwest else *-1
+	jump @done
+	@setDirNortheast
+	direction northeast else *2
+	jump @done
+	turn left
+	direction northeast else *-1
+	jump @done
+	@setDirEast
+	direction east else *2
+	jump @done
+	turn left
+	direction east else *-1
+	jump @done
+	@setDirSoutheast
+	direction southeast else *2
+	jump @done
+	turn left
+	direction southeast else *-1
+	jump @done
+	@setDirSouthwest
+	direction southwest else *2
+	jump @done
+	turn left
+	direction southwest else *-1
+	jump @done
+	@setDirWest
+	direction west else *2
+	jump @done
+	turn left
+	direction west else *-1
+	jump @done
+	@setDirRandom
+	//TODO maybe change strategy
+	flip 3 else *2
+	jump @done
+	flip 2 else *3
+	turn left
+	jump @done
+	turn right
+	jump @done
+	@setDirNotVisitedField
+	//TODO add new strategy for non visited fields
+	jump @setDirRandom
+	@done
+	jump //add jumpback address
+}

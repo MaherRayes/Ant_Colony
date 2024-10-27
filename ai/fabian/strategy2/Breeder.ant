@@ -1,0 +1,102 @@
+#Breeder {
+    @begin
+    call #isFoodHere
+    test 1 else @doAMove
+    move else @goAway
+    pickup else @goAway
+    call #justBreedIt
+@goAway
+    call #getRandomSafeDirection
+    move else @doAMove
+    jump @begin
+@doAMove
+    call #getRandomSafeDirection
+    move else @beschwerdichbeisteven
+    jump @begin
+@beschwerdichbeisteven
+    flip 2 else @turnRight
+    turn left
+    jump @doAMove
+@turnRight
+    turn right
+    jump @doAMove
+}
+
+//register eins ist true, wenn Ameise auf food schaut
+//und wenn kein Antlion beim Futter ist
+#isFoodHere {
+    sense ahead food else @leftFood
+    jump @goAlmostSuccessfullyBack
+@leftFood
+    sense left food else @rightFood
+    turn left
+    jump @goAlmostSuccessfullyBack
+@rightFood
+    sense right food else @goBack
+    turn right
+    jump @goAlmostSuccessfullyBack
+@goBack
+    return
+@goAlmostSuccessfullyBack
+    sense ahead antlion else @goSuccessfullyBack
+    unset 1
+    return
+@goSuccessfullyBack
+    set 1
+    return
+}
+
+//Futter muss in der Nähe sein
+#justBreedIt {
+@testFood
+    sense ahead food else @test1
+    jump @begin
+@test1
+    turn left
+    sense ahead food else @test2
+    jump @begin
+@test2
+    turn left
+    sense ahead food else @test3
+    jump @begin
+@test3
+    turn left
+    sense ahead food else @test4
+    jump @begin
+@test4
+    turn left
+    sense ahead food else @test5
+    jump @begin
+@test5
+    turn left
+    sense ahead food else @goAway
+    jump @begin
+@begin
+    flip 40 else @breeding
+    jump @testFood
+@breeding
+    pickup else *1
+    turn left
+    breed else @begin
+    pickup else @goBack
+    jump @begin
+@goBack
+    unset 1
+    return
+@goAway
+    unset 1
+    return
+}
+
+#getRandomSafeDirection {
+    flip 10 else @goBack
+    flip 2 else @turnRight
+    turn left
+    jump @goBack
+@turnRight
+    turn right
+    jump @goBack
+@goBack
+    call #safe_dirNoFoehome
+    return
+}

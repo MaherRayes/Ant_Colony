@@ -1,0 +1,23 @@
+//Go around the obstacles
+#escape {
+    turn right
+    move else *-1
+    @start
+    //check if the ant is standing on a marker
+    sense here marker 6 else *2
+    jump @done
+    sense ahead foe else *2
+    jump *4
+    sense ahead friend else *2
+    jump *2
+    jump @start
+    sense left foe else *2
+    move else @done
+    sense left friend else *2
+    move else @done
+    turn left
+    jump @start
+
+    @done
+    return
+}

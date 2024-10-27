@@ -1,0 +1,24 @@
+//Register 1 wird gesetzt, wenn es erfolgreich war
+//Für Collector angepasst
+#bypassObstacle2 {
+@begin
+    call #safe_dirNoFoehome
+    move else @bypassLeft
+    pickup else *1
+    return
+@bypassLeft
+    turn left
+    move else @fail
+    pickup else *1
+    call #safe_dirNoFoehome
+    turn right
+    move else @fail
+    pickup else *1
+    call #safe_dirNoFoehome
+    turn left
+    set 1
+    return
+@fail
+    unset 1
+    return
+}

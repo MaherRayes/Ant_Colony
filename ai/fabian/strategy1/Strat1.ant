@@ -1,0 +1,9 @@
+//Simons Strategie und Fabians s2 vereint
+//Hälfte ist Simons, die andere Hälfte Fabians
+
+#main {
+    flip 2 else @callFabian
+    jump @callSimon
+@callFabian
+
+}

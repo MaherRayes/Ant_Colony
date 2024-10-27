@@ -1,0 +1,20 @@
+//find out if there is something in the next field
+#senseObstacle {
+    @begin
+    sense ahead antlion else *2
+    jump @changeDir
+    sense ahead friend else *2
+    jump @changeDir
+    sense ahead foe else *2
+    jump @changeDir
+    sense ahead rock else *2
+    jump @changeDir
+    jump @done
+
+    @changeDir
+    turn left
+    jump @begin
+
+    @done
+    return
+}

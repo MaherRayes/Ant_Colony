@@ -1,0 +1,400 @@
+#main{
+        set 1                               //set FindingFood state
+    @begin
+        sense here friendfood else @findFood               //Test if ant has food or not, if GOTO findFood
+        test 2 else @bringHome              //Prerequisite: Ant has to have food. Test if ant is in last food state, if not use normal markerfollow function
+        jump  @followMarkerHomeNoFood        //Prerequisite: Ant has food, got the last food. Mark path while walking back as empty
+    @findFood
+        call #findFoodNoMarker              //findfood and mark the way to it and back home
+    @bringHome
+        sense here friendfood else @begin   //Test if ant has food, if not GOTO findFood
+        test 2 else @followMarkerHome       //Prerequisite: ant has food. Test if ant got the last food, if yes mark way as empty
+        //TODO add followMarkerHomeNoFood
+    @followMarkerHomeNoFood
+        call #followMarkerToHome        //walk home with food, drop, mark way as empty
+        sense here friendfood else @findFood               //test if ant has food, if yes continue walking home
+        jump  @bringHome                     //Prequisite: ant has food. GOTO followmarkerhome
+    @followMarkerHome
+        call #followMarkerToHome            //follow marker home nad drop food
+        sense here friendfood else @collectFood            //Test if ant still has food, if yes, follow markers, if not find food
+        jump  @bringHome                     //GOTO followmarkershome
+    @collectFood
+        call #followMarkerToFood            //GOTO followmarkertoFood
+        jump  @begin                         //repeat
+}
+
+#findFoodNoMarker{
+	@begin
+	call #setDirRandom
+	call #safe_dir
+	call #markMovingTo
+	move else @begin
+	call #markMovedFrom
+	call #checkFoodAndPickup
+	sense here friendfood else @begin
+	sense here food else @setLastFoodState
+	unset 1
+	return
+@setLastFoodState
+    set 2
+    unset 1
+    return
+}
+
+#checkFoodAndPickup{
+	pickup else @return
+	return
+}
+#markMovingTo{
+	@northwest
+	//001
+	direction northwest else @northeast
+	unmark 0
+	mark 1
+	mark 2
+	return
+
+	@northeast
+	//010
+	direction northeast else @east
+	unmark 0
+	mark 1
+	unmark 2
+	return
+
+	@east
+	//011
+	direction east else @southeast
+	unmark 0
+	mark 1
+	mark 2
+	return
+
+	@southeast
+	//100
+	direction southeast else @southwest
+	mark 0
+	unmark 1
+	unmark 2
+	return
+
+	@southwest
+	//101
+	direction southwest else @west
+	mark 0
+	unmark 1
+	mark 2
+	return
+
+	@west
+	//110,  we know here it has to be west, as everything else has been already tested
+	mark 0
+	mark 1
+	unmark 2
+	return
+}
+
+#markMovedFrom{
+	@northwest
+	//001
+	direction southeast else @northeast
+	unmark 3
+	unmark 4
+	mark 5
+	return
+
+	@northeast
+	//010
+	direction southwest else @east
+	unmark 3
+	mark 4
+	unmark 5
+	return
+
+	@east
+	//011
+	direction west else @southeast
+	unmark 3
+	mark 4
+	mark 5
+	return
+
+	@southeast
+	//100
+	direction northwest else @southwest
+	mark 3
+	unmark 4
+	unmark 5
+	return
+
+	@southwest
+	//101
+	direction northeast else @west
+	mark 3
+	unmark 4
+	mark 5
+	return
+
+	@west
+	//110,  we know here it has to be west, as everything else has been already tested
+	mark 3
+	mark 4
+	unmark 5
+	return
+}
+
+#setDirRandom{
+	flip 3 else *2
+	jump  *5
+	flip 2 else *3
+	turn left
+	jump  *2
+	turn right
+	return
+}
+
+#safe_dir{
+@checkForAntLion
+	sense ahead antlion else *3
+	turn left
+	jump  @checkForAntLion
+@checkForFoehome
+	sense ahead foehome else *3
+	turn left
+	jump @checkForAntLion
+@checkForEnemy
+    //sense left foe else *1 not needed in this implementation
+    sense right foe else @return
+    turn left
+    jump  @checkForAntLion
+}
+
+//added cylebreak
+#setDirUnexplored{
+    //starts at 001 to 111
+    unset 1
+    unset 4
+    unset 5
+@begin
+    sense ahead marker 0 else *2
+    jump @changeDir
+    sense ahead marker 1 else *2
+    jump @changeDir
+    sense ahead marker 2 else *2
+    jump @changeDir
+    sense ahead marker 3 else *2
+    jump @changeDir
+    sense ahead marker 4 else *2
+    jump @changeDir
+    sense ahead marker 5 else *2
+    jump @changeDir
+    jump  @return
+@changeDir
+    turn left
+    flip 50 else @begin
+    jump  @cycleBreak
+    jump  @begin
+@cycleBreak
+    unset 1
+}
+
+#followMarkerToFood{
+	@begin
+	call #interpretMarkerFood
+	test 1 else @moreFood
+	jump  @return
+@moreFood
+	call #safe_dirWithFoehome
+@jukeBack
+	move else @jukeAway
+	pickup else @pickupTest
+@pickupTest
+	sense here friendfood else @begin
+	return
+@jukeAway
+    turn left
+    jump @jukeBack
+}
+#safe_dirWithFoehome{
+@checkForAntLion
+	sense ahead antlion else *3
+	turn left
+	jump  @checkForAntLion
+@checkForFoehome
+	sense ahead foehome else *3
+	turn left
+	jump @checkForAntLion
+@checkForEnemy
+    sense left foe else *4
+    sense right foe else *3
+    turn left
+    jump  @checkForAntLion
+    return
+}
+#interpretMarkerFood{
+	@setDirectionWithMarkerFollowToFood
+	sense here marker 0 else @state1
+	sense here marker 1 else @state2
+	sense here marker 2 else *2
+	jump  @setDirNoFoodLeft
+	jump  @setDirWest
+	@state1
+	sense here marker 1 else @state3
+	sense here marker 2 else *2
+	jump  @setDirEast
+	jump  @setDirNortheast
+	@state2
+	sense here marker 2 else *2
+	jump  @setDirSouthwest
+	jump  @setDirSoutheast
+	@state3
+	sense here marker 2 else *2
+	jump  @setDirNorthwest
+	jump  @setDirRandom
+	@setDirNorthwest
+	direction northwest else *2
+	jump  @return
+	turn left
+	direction northwest else *-1
+	jump  @done
+	@setDirNortheast
+	direction northeast else *2
+	jump  @done
+	turn left
+	direction northeast else *-1
+	jump  @done
+	@setDirEast
+	direction east else *2
+	jump  @done
+	turn left
+	direction east else *-1
+	jump  @done
+	@setDirSoutheast
+	direction southeast else *2
+	jump  @done
+	turn left
+	direction southeast else *-1
+	jump  @done
+	@setDirSouthwest
+	direction southwest else *2
+	jump  @done
+	turn left
+	direction southwest else *-1
+	jump  @done
+	@setDirWest
+	direction west else *2
+	jump  @done
+	turn left
+	direction west else *-1
+	jump  @done
+	@setDirRandom
+	//TODO maybe change strategy
+	flip 3 else *2
+	jump  @done
+	flip 2 else *3
+	turn left
+	jump  @done
+	turn right
+	jump  @done
+	@setDirNoFoodLeft
+	//TODO check if strategy works well
+	set 1
+	jump  @setDirRandom
+	@done
+	jump  @return
+}
+
+#followMarkerToHome{
+	@begin
+    test 2 else @notLastFood
+    mark 0
+    mark 1
+    mark 2
+@notLastFood
+	call #interpretMarkerHome
+@afterInterpret
+	move else @jukeAway
+	call #checkFoodDropOnHome
+	sense here friendfood else @return
+	jump  @begin
+@jukeAway
+    turn left
+    jump @afterInterpret
+}
+#checkFoodDropOnHome{
+ 	sense here home else *4
+ 	drop else *3
+ 	unset 0
+ 	return
+ }
+#interpretMarkerHome{
+	@setDirectionWithMarkerFollowToFood
+	sense here marker 3 else @state1
+	sense here marker 4 else @state2
+	sense here marker 5 else *2
+	jump  @setDirNoFoodLeft
+	jump  @setDirWest
+	@state1
+	sense here marker 4 else @state3
+	sense here marker 5 else *2
+	jump  @setDirEast
+	jump  @setDirNortheast
+	@state2
+	sense here marker 5 else *2
+	jump  @setDirSouthwest
+	jump  @setDirSoutheast
+	@state3
+	sense here marker 5 else *2
+	jump  @setDirNorthwest
+	jump  @setDirRandom
+	@setDirNorthwest
+	direction northwest else *2
+	jump  @return
+	turn left
+	direction northwest else *-1
+	jump  @done
+	@setDirNortheast
+	direction northeast else *2
+	jump  @done
+	turn left
+	direction northeast else *-1
+	jump  @done
+	@setDirEast
+	direction east else *2
+	jump  @done
+	turn left
+	direction east else *-1
+	jump  @done
+	@setDirSoutheast
+	direction southeast else *2
+	jump  @done
+	turn left
+	direction southeast else *-1
+	jump  @done
+	@setDirSouthwest
+	direction southwest else *2
+	jump  @done
+	turn left
+	direction southwest else *-1
+	jump  @done
+	@setDirWest
+	direction west else *2
+	jump  @done
+	turn left
+	direction west else *-1
+	jump  @done
+	@setDirRandom
+	//TODO maybe change strategy
+	flip 3 else *2
+	jump  @done
+	flip 2 else *3
+	turn left
+	jump  @done
+	turn right
+	jump  @done
+	@setDirNoFoodLeft
+	//TODO check if strategy works well
+	set 1
+	jump  @setDirRandom
+	@done
+}

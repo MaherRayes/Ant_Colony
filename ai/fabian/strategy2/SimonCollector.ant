@@ -1,0 +1,38 @@
+#SimonCollector {
+    @begin
+    call #findFood
+    pickup else @begin
+    turn left
+    turn left
+    turn left
+    call #findHome
+    drop else @begin
+    jump @begin
+}
+
+// PARAM 0: 1 = Success, 0 = Failure
+// Also turns ant!
+#safe_move {
+sense ahead antlion else @goOn1
+unset 0
+return
+@goOn1
+sense ahead foehome else @goOn2
+@fail
+unset 0
+return
+@goOn2
+move else @fail
+set 0
+return
+}
+
+
+#randomized_turn {
+        flip 4 else @return
+        flip 2 else @turnleft
+        turn right
+        return
+        @turnleft
+        turn left
+}

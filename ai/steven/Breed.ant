@@ -1,0 +1,17 @@
+#make_love {
+    turn left
+    turn left
+    call #safe_move @return
+    turn left
+    turn left
+    turn left
+    // We now look at our food!
+
+    flip 3 else *2
+    unset 5
+
+    @waitForBreed
+    flip 100 else *2
+    jump @return
+    breed else @waitForBreed
+}

@@ -1,0 +1,25 @@
+#goRandomWithFoeHome {
+    @begin
+        flip 7 else @goAhead
+        flip 2 else @goRight
+        jump @goLeft
+    @goLeft
+        turn left
+        call #safe_dirWithFoehome
+        move else @noMovePossible
+        return
+    @goAhead
+        call #safe_dirWithFoehome
+        move else @noMovePossible
+        return
+    @goRight
+        turn right
+        call #safe_dirWithFoehome
+        move else @noMovePossible
+        return
+    @noMovePossible
+        turn left
+        call #safe_dirWithFoehome
+        move else @noMovePossible
+        return
+}

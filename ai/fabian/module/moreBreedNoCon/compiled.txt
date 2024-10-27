@@ -1,0 +1,694 @@
+brain "Fabian_s3_morebreed-con" {
+	sense here home else 4 //target: @notHome
+	jump 2 //target: @home
+	flip 2 else 5 //target: @getABreeder //label: @home
+	jump 390 //target: @getACollector
+	jump 5 //target: @getABreeder //label: @notHome
+	sense ahead food else 7 //target: @leftFood //BOM: #isFoodHere //label: @begin //BOM: #Breeder //label: @getABreeder
+	jump 14 //target: @goAlmostSuccessfullyBack
+	sense left food else 10 //target: @rightFood //label: @leftFood
+	turn left
+	jump 14 //target: @goAlmostSuccessfullyBack
+	sense right food else 13 //target: @goBack //label: @rightFood
+	turn right
+	jump 14 //target: @goAlmostSuccessfullyBack
+	jump 19   //target: @return//target: @return//target: @return //label: @goBack
+	sense ahead antlion else 17 //target: @goSuccessfullyBack //label: @goAlmostSuccessfullyBack
+	unset 1
+	jump 19   //target: @return//target: @return//target: @return
+	set 1 //label: @goSuccessfullyBack
+	jump 19   //target: @return//target: @return//target: @return // EOM: #isFoodHere
+	test 1 else 368 //target: @doAMove
+	move else 351 //target: @goAway
+	pickup else 351 //target: @goAway
+	sense ahead food else 24 //target: @test1 //label: @testFood //BOM: #justBreedIt
+	jump 39  //target: @begin//target: @begin
+	turn left //label: @test1
+	sense ahead food else 27 //target: @test2
+	jump 39  //target: @begin//target: @begin
+	turn left //label: @test2
+	sense ahead food else 30 //target: @test3
+	jump 39  //target: @begin//target: @begin
+	turn left //label: @test3
+	sense ahead food else 33 //target: @test4
+	jump 39  //target: @begin//target: @begin
+	turn left //label: @test4
+	sense ahead food else 36 //target: @test5
+	jump 39  //target: @begin//target: @begin
+	turn left //label: @test5
+	sense ahead food else 349  //target: @goAway//target: @goAway
+	jump 39  //target: @begin//target: @begin
+	flip 20 else 41  //target: @begin//target: @breeding //label: @begin
+	jump 22 //target: @testFood
+	pickup else 42 //label: @breeding
+	turn left
+	breed else 39  //target: @begin//target: @begin
+	sense here friendfood else 175   //target: @begin//target: @begin//target: @searchFood //label: @begin //BOM: #collectFoodWithBackway
+	jump 46 //target: @goHome
+	sense here marker 2 else 58    //target: @begin//target: @begin//target: @begin//target: @0xx //label: @begin //BOM: #followPath012 //label: @goHome
+	jump 48 //target: @1xx
+	sense here marker 1 else 52 //target: @10x //label: @1xx
+	jump 50 //target: @11x
+	direction west else 170 //target: @turn11x //label: @11x
+	jump 70 //target: @doAStep
+	sense here marker 0 else 56 //target: @100 //label: @10x
+	jump 54 //target: @101
+	direction southwest else 168 //target: @turn101 //label: @101
+	jump 70 //target: @doAStep
+	direction southeast else 166 //target: @turn100 //label: @100
+	jump 70 //target: @doAStep
+	sense here marker 1 else 66 //target: @00x //label: @0xx
+	jump 60 //target: @01x
+	sense here marker 0 else 64 //target: @010 //label: @01x
+	jump 62 //target: @011
+	direction east else 164 //target: @turn011 //label: @011
+	jump 70 //target: @doAStep
+	direction northeast else 162 //target: @turn010 //label: @010
+	jump 70 //target: @doAStep
+	sense here marker 0 else 113 //target: @searchNextToMe //label: @00x
+	jump 68 //target: @001
+	direction northwest else 160 //target: @turn001 //label: @001
+	jump 70 //target: @doAStep
+	move else 73 //target: @bypassWay //label: @doAStep
+	set 2
+	jump 172     //target: @return//target: @return//target: @return//target: @return//target: @return
+	sense ahead antlion else 76     //target: @begin//target: @begin//target: @begin//target: @begin//target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome //label: @begin //BOM: #bypassObstacle2 //label: @bypassWay
+	turn left
+	jump 73 //target: @checkForAntLion
+	sense left foe else 81        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 81        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 73 //target: @checkForAntLion
+	jump 81        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	move else 84 //target: @bypassLeft
+	pickup else 83
+	jump 111      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @bypassLeft
+	move else 109 //target: @fail
+	pickup else 87
+	sense ahead antlion else 90 //target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome
+	turn left
+	jump 87 //target: @checkForAntLion
+	sense left foe else 95        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 95        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 87 //target: @checkForAntLion
+	jump 95        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	turn right
+	move else 109 //target: @fail
+	pickup else 98
+	sense ahead antlion else 101 //target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome
+	turn left
+	jump 98 //target: @checkForAntLion
+	sense left foe else 106        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 106        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 98 //target: @checkForAntLion
+	jump 106        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	turn left
+	set 1
+	jump 111      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	unset 1 //label: @fail
+	jump 111      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #bypassObstacle2
+	unset 2
+	jump 172     //target: @return//target: @return//target: @return//target: @return//target: @return
+	flip 7 else 127     //target: @begin//target: @begin//target: @begin//target: @begin//target: @goAhead //label: @begin //BOM: #goRandom //label: @searchNextToMe
+	flip 2 else 137 //target: @goRight
+	jump 116 //target: @goLeft
+	turn left //label: @goLeft
+	sense ahead antlion else 120 //target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome
+	turn left
+	jump 117 //target: @checkForAntLion
+	sense left foe else 125         //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 125         //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 117 //target: @checkForAntLion
+	jump 125         //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	move else 148 //target: @noMovePossible
+	jump 159      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	sense ahead antlion else 130 //target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome //label: @goAhead
+	turn left
+	jump 127 //target: @checkForAntLion
+	sense left foe else 135         //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 135         //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 127 //target: @checkForAntLion
+	jump 135         //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	move else 148 //target: @noMovePossible
+	jump 159      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn right //label: @goRight
+	sense ahead antlion else 141 //target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome
+	turn left
+	jump 138 //target: @checkForAntLion
+	sense left foe else 146         //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 146         //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 138 //target: @checkForAntLion
+	jump 146         //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	move else 148 //target: @noMovePossible
+	jump 159      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @noMovePossible
+	sense ahead antlion else 152 //target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome
+	turn left
+	jump 149 //target: @checkForAntLion
+	sense left foe else 157         //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 157         //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 149 //target: @checkForAntLion
+	jump 157         //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	move else 148 //target: @noMovePossible
+	jump 159      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #goRandom
+	jump 172     //target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @turn001
+	jump 68 //target: @001
+	turn left //label: @turn010
+	jump 64 //target: @010
+	turn left //label: @turn011
+	jump 62 //target: @011
+	turn left //label: @turn100
+	jump 56 //target: @100
+	turn left //label: @turn101
+	jump 54 //target: @101
+	turn left //label: @turn11x
+	jump 50 //target: @11x // EOM: #followPath012
+	sense here home else 44   //target: @begin//target: @begin//target: @begin
+	drop else 44   //target: @begin//target: @begin//target: @begin
+	jump 44   //target: @begin//target: @begin//target: @begin
+	sense here food else 178 //target: @nextLeft //label: @searchFood
+	pickup else 44   //target: @begin//target: @begin//target: @begin
+	jump 44   //target: @begin//target: @begin//target: @begin
+	sense left food else 181 //target: @nextAhead //label: @nextLeft
+	turn left
+	jump 186  //target: @doAMove//target: @doAMove
+	sense ahead food else 183 //target: @nextRight //label: @nextAhead
+	jump 186  //target: @doAMove//target: @doAMove
+	sense right food else 243 //target: @goRandom //label: @nextRight
+	turn right
+	jump 186  //target: @doAMove//target: @doAMove
+	sense ahead antlion else 189  //target: @doAMove//target: @checkForFoehome //label: @checkForAntLion //BOM: #safe_dirWithFoehome //label: @doAMove
+	turn left
+	jump 186 //target: @checkForAntLion
+	sense ahead foehome else 192 //target: @checkForEnemy //label: @checkForFoehome
+	turn left
+	jump 186 //target: @checkForAntLion
+	sense left foe else 197      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 197      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @turnLeft
+	jump 186 //target: @checkForAntLion
+	jump 197      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirWithFoehome
+	move else 243 //target: @goRandom
+	sense here marker 0 else 200    //target: @begin//target: @begin//target: @begin//target: @markperhabs1 //label: @begin //BOM: #setPath
+	jump 242     //target: @return//target: @return//target: @return//target: @return//target: @return
+	sense here marker 1 else 202 //target: @markperhabs2 //label: @markperhabs1
+	jump 242     //target: @return//target: @return//target: @return//target: @return//target: @return
+	sense here marker 2 else 204 //target: @markIt //label: @markperhabs2
+	jump 242     //target: @return//target: @return//target: @return//target: @return//target: @return
+	direction northwest else 206 //target: @next1 //label: @markIt
+	jump 229 //target: @southeast
+	direction northeast else 208 //target: @next2 //label: @next1
+	jump 233 //target: @southwest
+	direction east else 210 //target: @next3 //label: @next2
+	jump 237 //target: @west
+	direction southeast else 212 //target: @next4 //label: @next3
+	jump 217 //target: @northwest
+	direction southwest else 214 //target: @next5 //label: @next4
+	jump 221 //target: @northeast
+	direction west else 216 //target: @ERROR //label: @next5
+	jump 225 //target: @east
+	jump 216 //target: @ERROR //label: @ERROR
+	unmark 2 //label: @northwest
+	unmark 1
+	mark 0
+	jump 241 //target: @end
+	unmark 2 //label: @northeast
+	mark 1
+	unmark 0
+	jump 241 //target: @end
+	unmark 2 //label: @east
+	mark 1
+	mark 0
+	jump 241 //target: @end
+	mark 2 //label: @southeast
+	unmark 1
+	unmark 0
+	jump 241 //target: @end
+	mark 2 //label: @southwest
+	unmark 1
+	mark 0
+	jump 241 //target: @end
+	mark 2 //label: @west
+	mark 1
+	mark 0
+	jump 241 //target: @end
+	jump 198    //target: @begin//target: @begin//target: @begin//target: @begin //label: @end // EOM: #setPath
+	jump 44   //target: @begin//target: @begin//target: @begin
+	flip 7 else 260    //target: @begin//target: @begin//target: @begin//target: @goAhead //label: @begin //BOM: #goRandomWithFoeHome //label: @goRandom
+	flip 2 else 273 //target: @goRight
+	jump 246 //target: @goLeft
+	turn left //label: @goLeft
+	sense ahead antlion else 250 //target: @checkForFoehome //label: @checkForAntLion //BOM: #safe_dirWithFoehome
+	turn left
+	jump 247 //target: @checkForAntLion
+	sense ahead foehome else 253 //target: @checkForEnemy //label: @checkForFoehome
+	turn left
+	jump 247 //target: @checkForAntLion
+	sense left foe else 258       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 258       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @turnLeft
+	jump 247 //target: @checkForAntLion
+	jump 258       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirWithFoehome
+	move else 287 //target: @noMovePossible
+	jump 301     //target: @return//target: @return//target: @return//target: @return//target: @return
+	sense ahead antlion else 263 //target: @checkForFoehome //label: @checkForAntLion //BOM: #safe_dirWithFoehome //label: @goAhead
+	turn left
+	jump 260 //target: @checkForAntLion
+	sense ahead foehome else 266 //target: @checkForEnemy //label: @checkForFoehome
+	turn left
+	jump 260 //target: @checkForAntLion
+	sense left foe else 271       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 271       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @turnLeft
+	jump 260 //target: @checkForAntLion
+	jump 271       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirWithFoehome
+	move else 287 //target: @noMovePossible
+	jump 301     //target: @return//target: @return//target: @return//target: @return//target: @return
+	turn right //label: @goRight
+	sense ahead antlion else 277 //target: @checkForFoehome //label: @checkForAntLion //BOM: #safe_dirWithFoehome
+	turn left
+	jump 274 //target: @checkForAntLion
+	sense ahead foehome else 280 //target: @checkForEnemy //label: @checkForFoehome
+	turn left
+	jump 274 //target: @checkForAntLion
+	sense left foe else 285       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 285       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @turnLeft
+	jump 274 //target: @checkForAntLion
+	jump 285       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirWithFoehome
+	move else 287 //target: @noMovePossible
+	jump 301     //target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @noMovePossible
+	sense ahead antlion else 291 //target: @checkForFoehome //label: @checkForAntLion //BOM: #safe_dirWithFoehome
+	turn left
+	jump 288 //target: @checkForAntLion
+	sense ahead foehome else 294 //target: @checkForEnemy //label: @checkForFoehome
+	turn left
+	jump 288 //target: @checkForAntLion
+	sense left foe else 299       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 299       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @turnLeft
+	jump 288 //target: @checkForAntLion
+	jump 299       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirWithFoehome
+	move else 287 //target: @noMovePossible
+	jump 301     //target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #goRandomWithFoeHome
+	sense here marker 0 else 303    //target: @begin//target: @begin//target: @begin//target: @markperhabs1 //label: @begin //BOM: #setPath
+	jump 345     //target: @return//target: @return//target: @return//target: @return//target: @return
+	sense here marker 1 else 305 //target: @markperhabs2 //label: @markperhabs1
+	jump 345     //target: @return//target: @return//target: @return//target: @return//target: @return
+	sense here marker 2 else 307 //target: @markIt //label: @markperhabs2
+	jump 345     //target: @return//target: @return//target: @return//target: @return//target: @return
+	direction northwest else 309 //target: @next1 //label: @markIt
+	jump 332 //target: @southeast
+	direction northeast else 311 //target: @next2 //label: @next1
+	jump 336 //target: @southwest
+	direction east else 313 //target: @next3 //label: @next2
+	jump 340 //target: @west
+	direction southeast else 315 //target: @next4 //label: @next3
+	jump 320 //target: @northwest
+	direction southwest else 317 //target: @next5 //label: @next4
+	jump 324 //target: @northeast
+	direction west else 319 //target: @ERROR //label: @next5
+	jump 328 //target: @east
+	jump 319 //target: @ERROR //label: @ERROR
+	unmark 2 //label: @northwest
+	unmark 1
+	mark 0
+	jump 344 //target: @end
+	unmark 2 //label: @northeast
+	mark 1
+	unmark 0
+	jump 344 //target: @end
+	unmark 2 //label: @east
+	mark 1
+	mark 0
+	jump 344 //target: @end
+	mark 2 //label: @southeast
+	unmark 1
+	unmark 0
+	jump 344 //target: @end
+	mark 2 //label: @southwest
+	unmark 1
+	mark 0
+	jump 344 //target: @end
+	mark 2 //label: @west
+	mark 1
+	mark 0
+	jump 344 //target: @end
+	jump 301    //target: @begin//target: @begin//target: @begin//target: @begin //label: @end // EOM: #setPath
+	jump 44   //target: @begin//target: @begin//target: @begin // EOM: #collectFoodWithBackway
+	jump 39  //target: @begin//target: @begin
+	unset 1 //label: @goBack
+	jump 351   //target: @return//target: @return//target: @return
+	unset 1  //target: @goAway//label: @goAway
+	jump 351   //target: @return//target: @return//target: @return // EOM: #justBreedIt
+	flip 6 else 357 //target: @goBack //BOM: #getRandomSafeDirection //label: @goAway
+	flip 2 else 355  //target: @turnRight//target: @turnRight
+	turn left
+	jump 357 //target: @goBack
+	turn right  //target: @turnRight//label: @turnRight
+	jump 357 //target: @goBack
+	sense ahead antlion else 360 //target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome //label: @goBack
+	turn left
+	jump 357 //target: @checkForAntLion
+	sense left foe else 365    //target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 365    //target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 357 //target: @checkForAntLion
+	jump 365    //target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	jump 366   //target: @return//target: @return//target: @return // EOM: #getRandomSafeDirection
+	move else 368 //target: @doAMove
+	jump 5 //target: @begin
+	flip 6 else 374 //target: @goBack //BOM: #getRandomSafeDirection //label: @doAMove
+	flip 2 else 372  //target: @turnRight//target: @turnRight
+	turn left
+	jump 374 //target: @goBack
+	turn right  //target: @turnRight//label: @turnRight
+	jump 374 //target: @goBack
+	sense ahead antlion else 377 //target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome //label: @goBack
+	turn left
+	jump 374 //target: @checkForAntLion
+	sense left foe else 382    //target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 382    //target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 374 //target: @checkForAntLion
+	jump 382    //target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	jump 383   //target: @return//target: @return//target: @return // EOM: #getRandomSafeDirection
+	move else 385 //target: @beschwerdichbeisteven
+	jump 5 //target: @begin
+	flip 2 else 388 //target: @turnRight //label: @beschwerdichbeisteven
+	turn left
+	jump 368 //target: @doAMove
+	turn right //label: @turnRight
+	jump 368 //target: @doAMove // EOM: #Breeder
+	sense here friendfood else 521 //target: @searchFood //label: @begin //BOM: #collectFoodWithBackway //label: @getACollector
+	jump 392 //target: @goHome
+	sense here marker 2 else 404  //target: @begin//target: @0xx //label: @begin //BOM: #followPath012 //label: @goHome
+	jump 394 //target: @1xx
+	sense here marker 1 else 398 //target: @10x //label: @1xx
+	jump 396 //target: @11x
+	direction west else 516 //target: @turn11x //label: @11x
+	jump 416 //target: @doAStep
+	sense here marker 0 else 402 //target: @100 //label: @10x
+	jump 400 //target: @101
+	direction southwest else 514 //target: @turn101 //label: @101
+	jump 416 //target: @doAStep
+	direction southeast else 512 //target: @turn100 //label: @100
+	jump 416 //target: @doAStep
+	sense here marker 1 else 412 //target: @00x //label: @0xx
+	jump 406 //target: @01x
+	sense here marker 0 else 410 //target: @010 //label: @01x
+	jump 408 //target: @011
+	direction east else 510 //target: @turn011 //label: @011
+	jump 416 //target: @doAStep
+	direction northeast else 508 //target: @turn010 //label: @010
+	jump 416 //target: @doAStep
+	sense here marker 0 else 459 //target: @searchNextToMe //label: @00x
+	jump 414 //target: @001
+	direction northwest else 506 //target: @turn001 //label: @001
+	jump 416 //target: @doAStep
+	move else 419 //target: @bypassWay //label: @doAStep
+	set 2
+	jump 518    //target: @return//target: @return//target: @return//target: @return
+	sense ahead antlion else 422   //target: @begin//target: @begin//target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome //label: @begin //BOM: #bypassObstacle2 //label: @bypassWay
+	turn left
+	jump 419 //target: @checkForAntLion
+	sense left foe else 427       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 427       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 419 //target: @checkForAntLion
+	jump 427       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	move else 430 //target: @bypassLeft
+	pickup else 429
+	jump 457     //target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @bypassLeft
+	move else 455 //target: @fail
+	pickup else 433
+	sense ahead antlion else 436 //target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome
+	turn left
+	jump 433 //target: @checkForAntLion
+	sense left foe else 441       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 441       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 433 //target: @checkForAntLion
+	jump 441       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	turn right
+	move else 455 //target: @fail
+	pickup else 444
+	sense ahead antlion else 447 //target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome
+	turn left
+	jump 444 //target: @checkForAntLion
+	sense left foe else 452       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 452       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 444 //target: @checkForAntLion
+	jump 452       //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	turn left
+	set 1
+	jump 457     //target: @return//target: @return//target: @return//target: @return//target: @return
+	unset 1 //label: @fail
+	jump 457     //target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #bypassObstacle2
+	unset 2
+	jump 518    //target: @return//target: @return//target: @return//target: @return
+	flip 7 else 473   //target: @begin//target: @begin//target: @goAhead //label: @begin //BOM: #goRandom //label: @searchNextToMe
+	flip 2 else 483 //target: @goRight
+	jump 462 //target: @goLeft
+	turn left //label: @goLeft
+	sense ahead antlion else 466 //target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome
+	turn left
+	jump 463 //target: @checkForAntLion
+	sense left foe else 471        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 471        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 463 //target: @checkForAntLion
+	jump 471        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	move else 494 //target: @noMovePossible
+	jump 505     //target: @return//target: @return//target: @return//target: @return//target: @return
+	sense ahead antlion else 476 //target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome //label: @goAhead
+	turn left
+	jump 473 //target: @checkForAntLion
+	sense left foe else 481        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 481        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 473 //target: @checkForAntLion
+	jump 481        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	move else 494 //target: @noMovePossible
+	jump 505     //target: @return//target: @return//target: @return//target: @return//target: @return
+	turn right //label: @goRight
+	sense ahead antlion else 487 //target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome
+	turn left
+	jump 484 //target: @checkForAntLion
+	sense left foe else 492        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 492        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 484 //target: @checkForAntLion
+	jump 492        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	move else 494 //target: @noMovePossible
+	jump 505     //target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @noMovePossible
+	sense ahead antlion else 498 //target: @checkForEnemy //label: @checkForAntLion //BOM: #safe_dirNoFoehome
+	turn left
+	jump 495 //target: @checkForAntLion
+	sense left foe else 503        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 503        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left
+	jump 495 //target: @checkForAntLion
+	jump 503        //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirNoFoehome
+	move else 494 //target: @noMovePossible
+	jump 505     //target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #goRandom
+	jump 518    //target: @return//target: @return//target: @return//target: @return
+	turn left //label: @turn001
+	jump 414 //target: @001
+	turn left //label: @turn010
+	jump 410 //target: @010
+	turn left //label: @turn011
+	jump 408 //target: @011
+	turn left //label: @turn100
+	jump 402 //target: @100
+	turn left //label: @turn101
+	jump 400 //target: @101
+	turn left //label: @turn11x
+	jump 396 //target: @11x // EOM: #followPath012
+	sense here home else 390 //target: @begin
+	drop else 390 //target: @begin
+	jump 390 //target: @begin
+	sense here food else 524 //target: @nextLeft //label: @searchFood
+	pickup else 390 //target: @begin
+	jump 390 //target: @begin
+	sense left food else 527 //target: @nextAhead //label: @nextLeft
+	turn left
+	jump 532 //target: @doAMove
+	sense ahead food else 529 //target: @nextRight //label: @nextAhead
+	jump 532 //target: @doAMove
+	sense right food else 589 //target: @goRandom //label: @nextRight
+	turn right
+	jump 532 //target: @doAMove
+	sense ahead antlion else 535 //target: @checkForFoehome //label: @checkForAntLion //BOM: #safe_dirWithFoehome //label: @doAMove
+	turn left
+	jump 532 //target: @checkForAntLion
+	sense ahead foehome else 538 //target: @checkForEnemy //label: @checkForFoehome
+	turn left
+	jump 532 //target: @checkForAntLion
+	sense left foe else 543     //target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 543     //target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @turnLeft
+	jump 532 //target: @checkForAntLion
+	jump 543     //target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirWithFoehome
+	move else 589 //target: @goRandom
+	sense here marker 0 else 546  //target: @begin//target: @markperhabs1 //label: @begin //BOM: #setPath
+	jump 588    //target: @return//target: @return//target: @return//target: @return
+	sense here marker 1 else 548 //target: @markperhabs2 //label: @markperhabs1
+	jump 588    //target: @return//target: @return//target: @return//target: @return
+	sense here marker 2 else 550 //target: @markIt //label: @markperhabs2
+	jump 588    //target: @return//target: @return//target: @return//target: @return
+	direction northwest else 552 //target: @next1 //label: @markIt
+	jump 575 //target: @southeast
+	direction northeast else 554 //target: @next2 //label: @next1
+	jump 579 //target: @southwest
+	direction east else 556 //target: @next3 //label: @next2
+	jump 583 //target: @west
+	direction southeast else 558 //target: @next4 //label: @next3
+	jump 563 //target: @northwest
+	direction southwest else 560 //target: @next5 //label: @next4
+	jump 567 //target: @northeast
+	direction west else 562 //target: @ERROR //label: @next5
+	jump 571 //target: @east
+	jump 562 //target: @ERROR //label: @ERROR
+	unmark 2 //label: @northwest
+	unmark 1
+	mark 0
+	jump 587 //target: @end
+	unmark 2 //label: @northeast
+	mark 1
+	unmark 0
+	jump 587 //target: @end
+	unmark 2 //label: @east
+	mark 1
+	mark 0
+	jump 587 //target: @end
+	mark 2 //label: @southeast
+	unmark 1
+	unmark 0
+	jump 587 //target: @end
+	mark 2 //label: @southwest
+	unmark 1
+	mark 0
+	jump 587 //target: @end
+	mark 2 //label: @west
+	mark 1
+	mark 0
+	jump 587 //target: @end
+	jump 544  //target: @begin//target: @begin //label: @end // EOM: #setPath
+	jump 390 //target: @begin
+	flip 7 else 606  //target: @begin//target: @goAhead //label: @begin //BOM: #goRandomWithFoeHome //label: @goRandom
+	flip 2 else 619 //target: @goRight
+	jump 592 //target: @goLeft
+	turn left //label: @goLeft
+	sense ahead antlion else 596 //target: @checkForFoehome //label: @checkForAntLion //BOM: #safe_dirWithFoehome
+	turn left
+	jump 593 //target: @checkForAntLion
+	sense ahead foehome else 599 //target: @checkForEnemy //label: @checkForFoehome
+	turn left
+	jump 593 //target: @checkForAntLion
+	sense left foe else 604      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 604      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @turnLeft
+	jump 593 //target: @checkForAntLion
+	jump 604      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirWithFoehome
+	move else 633 //target: @noMovePossible
+	jump 647    //target: @return//target: @return//target: @return//target: @return
+	sense ahead antlion else 609 //target: @checkForFoehome //label: @checkForAntLion //BOM: #safe_dirWithFoehome //label: @goAhead
+	turn left
+	jump 606 //target: @checkForAntLion
+	sense ahead foehome else 612 //target: @checkForEnemy //label: @checkForFoehome
+	turn left
+	jump 606 //target: @checkForAntLion
+	sense left foe else 617      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 617      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @turnLeft
+	jump 606 //target: @checkForAntLion
+	jump 617      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirWithFoehome
+	move else 633 //target: @noMovePossible
+	jump 647    //target: @return//target: @return//target: @return//target: @return
+	turn right //label: @goRight
+	sense ahead antlion else 623 //target: @checkForFoehome //label: @checkForAntLion //BOM: #safe_dirWithFoehome
+	turn left
+	jump 620 //target: @checkForAntLion
+	sense ahead foehome else 626 //target: @checkForEnemy //label: @checkForFoehome
+	turn left
+	jump 620 //target: @checkForAntLion
+	sense left foe else 631      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 631      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @turnLeft
+	jump 620 //target: @checkForAntLion
+	jump 631      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirWithFoehome
+	move else 633 //target: @noMovePossible
+	jump 647    //target: @return//target: @return//target: @return//target: @return
+	turn left //label: @noMovePossible
+	sense ahead antlion else 637 //target: @checkForFoehome //label: @checkForAntLion //BOM: #safe_dirWithFoehome
+	turn left
+	jump 634 //target: @checkForAntLion
+	sense ahead foehome else 640 //target: @checkForEnemy //label: @checkForFoehome
+	turn left
+	jump 634 //target: @checkForAntLion
+	sense left foe else 645      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return //label: @checkForEnemy
+	sense right foe else 645      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return
+	turn left //label: @turnLeft
+	jump 634 //target: @checkForAntLion
+	jump 645      //target: @return//target: @return//target: @return//target: @return//target: @return//target: @return // EOM: #safe_dirWithFoehome
+	move else 633 //target: @noMovePossible
+	jump 647    //target: @return//target: @return//target: @return//target: @return // EOM: #goRandomWithFoeHome
+	sense here marker 0 else 649  //target: @begin//target: @markperhabs1 //label: @begin //BOM: #setPath
+	jump 691    //target: @return//target: @return//target: @return//target: @return
+	sense here marker 1 else 651 //target: @markperhabs2 //label: @markperhabs1
+	jump 691    //target: @return//target: @return//target: @return//target: @return
+	sense here marker 2 else 653 //target: @markIt //label: @markperhabs2
+	jump 691    //target: @return//target: @return//target: @return//target: @return
+	direction northwest else 655 //target: @next1 //label: @markIt
+	jump 678 //target: @southeast
+	direction northeast else 657 //target: @next2 //label: @next1
+	jump 682 //target: @southwest
+	direction east else 659 //target: @next3 //label: @next2
+	jump 686 //target: @west
+	direction southeast else 661 //target: @next4 //label: @next3
+	jump 666 //target: @northwest
+	direction southwest else 663 //target: @next5 //label: @next4
+	jump 670 //target: @northeast
+	direction west else 665 //target: @ERROR //label: @next5
+	jump 674 //target: @east
+	jump 665 //target: @ERROR //label: @ERROR
+	unmark 2 //label: @northwest
+	unmark 1
+	mark 0
+	jump 690 //target: @end
+	unmark 2 //label: @northeast
+	mark 1
+	unmark 0
+	jump 690 //target: @end
+	unmark 2 //label: @east
+	mark 1
+	mark 0
+	jump 690 //target: @end
+	mark 2 //label: @southeast
+	unmark 1
+	unmark 0
+	jump 690 //target: @end
+	mark 2 //label: @southwest
+	unmark 1
+	mark 0
+	jump 690 //target: @end
+	mark 2 //label: @west
+	mark 1
+	mark 0
+	jump 690 //target: @end
+	jump 647  //target: @begin//target: @begin //label: @end // EOM: #setPath
+	jump 390 //target: @begin // EOM: #collectFoodWithBackway
+}

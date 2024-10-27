@@ -1,0 +1,45 @@
+//Folgt dem Weg einen Schritt. Nimmt an, dass der Weg sicher ist
+//Register 2 wird gesetzt, wenn dem Weg richtig gefolgt werden konnte
+#followPath345{
+@begin
+    sense here marker 5 else @0xx
+    jump @1xx
+@1xx    //SE/SW/W
+    sense here marker 4 else @10x
+    jump @11x
+@11x    //W
+    direction west else @turn11x
+    jump @doAStep
+@10x    //SE/SW
+    sense here marker 3 else @100
+    jump @101
+@101    //SW
+    direction southwest else @turn101
+    jump@doAStep
+@100    //SE
+    direction southeast else @turn100
+    jump@doAStep
+@0xx    //NW/NE/E
+    sense here marker 4 else @00x
+    jump @01x
+@01x    //NE/E
+    sense here marker 3 else @010
+    jump @011
+@011    //E
+    direction east else @turn011
+    jump @doAStep
+@010    //NE
+    direction northeast else @turn 010
+    jump @doAStep
+@00x    //NW
+    direction northwest else @turn00x
+    jump @doAStep
+@doAStep
+    move else @byPassObstacle
+    set 2
+    return
+@byPassWay
+    call #bypassObstacle
+    unset 2
+    return
+}

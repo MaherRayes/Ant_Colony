@@ -1,0 +1,48 @@
+//REMOVED by sense here friendfood
+//register @ 1 is in MarkingNewPath state
+//register @ 2 is LastFoodPickupState
+//register @ 3 is in BreedState
+//register @ 0 is in cyclebreak mode
+//
+
+
+//mark 000 is not visited
+//mark 001 is northwest to food
+//...
+//mark 110 is west to food
+
+//mark xxx001 is northwest to base
+//...
+//mark xxx110 is west to home
+//
+//mark 111 means that the food has all been collected
+//simple ant moving to food, marking and returning home with food
+
+#main{
+        set 1                               //set FindingFood state
+    @begin
+        test 1 else @findFood               //Test if ant has food or not, if GOTO findFood
+        test 2 else @bringHome              //Prerequisite: Ant has to have food. Test if ant is in last food state, if not use normal markerfollow function
+        jump @followMarkerHomeNoFood        //Prerequisite: Ant has food, got the last food. Mark path while walking back as empty
+    @findFood
+        call #findFoodNoMarker              //findfood and mark the way to it and back home
+    @bringHome
+        sense here friendfood else @begin   //Test if ant has food, if not GOTO findFood
+        test 2 else @followMarkerHome       //Prerequisite: ant has food. Test if ant got the last food, if yes mark way as empty
+        //TODO add followMarkerHomeNoFood
+    @followMarkerHomeNoFood
+        call #followMarkerHomeNoFood        //walk home with food, drop, mark way as empty
+        sense here friendfood else @findFood               //test if ant has food, if yes continue walking home
+        jump @bringHome                     //Prequisite: ant has food. GOTO followmarkerhome
+    @followMarkerHome
+        call #followMarkerToHome            //follow marker home nad drop food
+        sense here friendfood else @collectFood            //Test if ant still has food, if yes, follow markers, if not find food
+        jump @bringHome                     //GOTO followmarkershome
+    @collectFood
+        call #followMarkerToFood            //GOTO followmarkertoFood
+        jump @begin                         //repeat
+}
+/*TODO: add new marker addition if last bit of food was picked up (marker 0-2 set to 1 1 1)*/
+/*TODO: walk next to path*/
+/*TODO: add breeding*/
+/*TODO: add else case if most fields have been marked already (findFoodNoMarker)*/

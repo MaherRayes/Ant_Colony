@@ -1,0 +1,93 @@
+
+#followMarkerHomeNoFood{
+	@begin
+    test 2 else @notLastFood
+    mark 0
+    mark 1
+    mark 2
+@notLastFood
+	call #interpretMarkerHome
+@afterInterpret
+	move else @begin
+	call #checkFoodDropOnHome
+	sense here friendfood else return
+	jump @begin
+}
+#checkFoodDropOnHome{
+ 	sense here home else *4
+ 	drop else *3
+ 	unset 0
+ 	return
+ }
+#interpretMarkerHome{
+	@setDirectionWithMarkerFollowToFood
+	sense here marker 3 else @state1
+	sense here marker 4 else @state2
+	sense here marker 5 else *2
+	jump @setDirNoFoodLeft
+	jump @setDirWest
+	@state1
+	sense here marker 4 else @state3
+	sense here marker 5 else *2
+	jump @setDirEast
+	jump @setNortheast
+	@state2
+	sense here marker 5 else *2
+	jump @setDirSouthwest
+	jump @setDirSoutheast
+	@state3
+	sense here marker 5 else *2
+	jump @setDirNorthwest
+	jump @setDirRandom
+	@setDirNorthwest
+	direction northwest else *2
+	jump @return
+	turn left
+	direction northwest else *-1
+	jump @done
+	@setDirNortheast
+	direction northeast else *2
+	jump @done
+	turn left
+	direction northeast else *-1
+	jump @done
+	@setDirEast
+	direction east else *2
+	jump @done
+	turn left
+	direction east else *-1
+	jump @done
+	@setDirSoutheast
+	direction southeast else *2
+	jump @done
+	turn left
+	direction southeast else *-1
+	jump @done
+	@setDirSouthwest
+	direction southwest else *2
+	jump @done
+	turn left
+	direction southwest else *-1
+	jump @done
+	@setDirWest
+	direction west else *2
+	jump @done
+	turn left
+	direction west else *-1
+	jump @done
+	@setDirRandom
+	//TODO maybe change strategy
+	flip 3 else *2
+	jump @done
+	flip 2 else *3
+	turn left
+	jump @done
+	turn right
+	jump @done
+	@setDirNotVisitedField
+	//TODO check if strategy works well
+	set 1
+	jump @setDirRandom
+	@done
+	jump //add jumpback address
+}
